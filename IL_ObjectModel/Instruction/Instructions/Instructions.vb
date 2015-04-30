@@ -1,5 +1,5 @@
 ﻿Namespace Global.IL
-    Namespace Asm
+    Namespace Sarc.Asm
         <HideModuleName>
         Public Module Factory
             Public ReadOnly Property nop As New Instructions.nop()

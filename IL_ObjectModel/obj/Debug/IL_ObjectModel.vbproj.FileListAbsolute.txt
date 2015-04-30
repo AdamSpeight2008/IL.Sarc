@@ -9,3 +9,7 @@ C:\Users\Adam\Documents\Visual Studio 2015\Projects\IL_ObjectModel\IL_ObjectMode
 C:\Users\Adam\Documents\Visual Studio 2015\Projects\IL_ObjectModel\IL_ObjectModel\obj\Debug\IL_ObjectModel.exe
 C:\Users\Adam\Documents\Visual Studio 2015\Projects\IL_ObjectModel\IL_ObjectModel\obj\Debug\IL_ObjectModel.xml
 C:\Users\Adam\Documents\Visual Studio 2015\Projects\IL_ObjectModel\IL_ObjectModel\obj\Debug\IL_ObjectModel.pdb
+C:\Users\Adam\Documents\GitHub\IL.Sarc\IL_ObjectModel\bin\Debug\IL_ObjectModel.exe.config
+C:\Users\Adam\Documents\GitHub\IL.Sarc\IL_ObjectModel\obj\Debug\IL_ObjectModel.exe
+C:\Users\Adam\Documents\GitHub\IL.Sarc\IL_ObjectModel\obj\Debug\IL_ObjectModel.xml
+C:\Users\Adam\Documents\GitHub\IL.Sarc\IL_ObjectModel\obj\Debug\IL_ObjectModel.pdb
