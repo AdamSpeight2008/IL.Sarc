@@ -30,5 +30,11 @@
 
     End Class
 
+    Public Enum StkOp
+        Pop = -1
+        Null = 0
+        Push = +1
+    End Enum
+
 End Namespace
 

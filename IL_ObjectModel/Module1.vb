@@ -16,6 +16,12 @@
             Console.WriteLine($"{ln:x4}  {l}")
             ln += 1
         Next
+
+        Dim bs As New ByteSource(prog.GetBytes)
+        Dim dc As New ByteCode_Decoder()
+        Dim res = dc.Decode(bs.GetReader)
+
+
     End Sub
 
 End Module

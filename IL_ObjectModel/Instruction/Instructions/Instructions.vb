@@ -20,7 +20,27 @@
             Public ReadOnly Property stloc_2 As New Instructions.stloc_2()
             Public ReadOnly Property stloc_3 As New Instructions.stloc_3()
 
+            Public ReadOnly Property ret As New Instructions.ret()
+
             Public ReadOnly Property add As New Instructions.add()
+            Public ReadOnly Property [sub] As New Instructions.sub()
+            Public ReadOnly Property mul As New Instructions.mul()
+            Public ReadOnly Property div As New Instructions.div()
+            Public ReadOnly Property div_u As New Instructions.div_un()
+
+            Public ReadOnly Property [rem] As New Instructions.[rem]()
+            Public ReadOnly Property rem_un As New Instructions.rem_un()
+            Public ReadOnly Property [or] As New Instructions.[or]()
+            Public ReadOnly Property [xor] As New Instructions.[xor]()
+            Public ReadOnly Property [and] As New Instructions.[and]()
+            Public ReadOnly Property [not] As New Instructions.[not]()
+
+            Public ReadOnly Property neg As New Instructions.neg()
+
+            Public ReadOnly Property pop As New Instructions.pop()
+            Public ReadOnly Property dup As New Instructions.dup()
+
+
         End Module
     End Namespace
 
@@ -890,15 +910,17 @@
                 End Sub
 
             End Class
-            Public Class [not]
-                Inherits IL_Instruction
+        Public Class [not]
+            Inherits IL_Instruction
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.[not])
-                End Sub
+            Public Sub New()
+                MyBase.New(OpCode.OpCodes.[not])
+            End Sub
 
-            End Class
-            Public Class conv_i1
+        End Class
+
+
+        Public Class conv_i1
                 Inherits IL_Instruction
 
                 Public Sub New()
