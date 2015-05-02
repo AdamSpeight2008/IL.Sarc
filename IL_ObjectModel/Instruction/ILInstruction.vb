@@ -22,23 +22,31 @@
         End Function
     End Class
 
-    Public MustInherit Class ILOpWithTarget
+    Public MustInherit Class ILOpWithTarget(Of T As IL_Target)
         Inherits IL_Instruction
-        Protected Friend _target As IL_Target
+        Public ReadOnly Property Target As T
 
-        Public ReadOnly Property Target As IL_Target
-            Get
-                Return _target
-            End Get
-        End Property
-
-        Friend Sub New(opCode As OpCode)
+        Friend Sub New(opCode As OpCode, Target As T)
             MyBase.New(opCode)
+            Me.Target = Target
         End Sub
 
         Public Overrides Function ToString() As String
             Return $"{MyBase.ToString()}  {Target}"
         End Function
+    End Class
+
+    Public Class ILOp_b1
+        Inherits ILOpWithTarget(Of Target_1)
+        Friend Sub New(opCode As OpCode, b0 As Byte)
+            MyBase.New(opCode, New Target_1(b0))
+        End Sub
+    End Class
+    Public Class ILOp_b4
+        Inherits ILOpWithTarget(Of Target_4)
+        Friend Sub New(opCode As OpCode, b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
+            MyBase.New(opCode, New Target_4(b0, b1, b2, b3))
+        End Sub
     End Class
 
     Public MustInherit Class IL_Target

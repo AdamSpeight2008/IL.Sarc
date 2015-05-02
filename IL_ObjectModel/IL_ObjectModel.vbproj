@@ -68,7 +68,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.vb" />
+    <Compile Include="ByteCode_Decoder.vb" />
     <Compile Include="Exts.vb" />
     <Compile Include="ILCode.vb" />
     <Compile Include="Instruction\ILInstruction.vb" />
