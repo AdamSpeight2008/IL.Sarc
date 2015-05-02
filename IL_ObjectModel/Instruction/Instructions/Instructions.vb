@@ -76,7 +76,42 @@
             Public ReadOnly Property endfinally As New Instructions.endfinally
             Public ReadOnly Property endfilter As New Instructions.endfilter
 
+            Public ReadOnly Property conv_ovf_i1_un As New Instructions.conv_ovf_i1_un
+            Public ReadOnly Property conv_ovf_i2_un As New Instructions.conv_ovf_i2_un
+            Public ReadOnly Property conv_ovf_i4_un As New Instructions.conv_ovf_i4_un
+            Public ReadOnly Property conv_ovf_i8_un As New Instructions.conv_ovf_i8_un
+            Public ReadOnly Property conv_ovf_u1_un As New Instructions.conv_ovf_u1_un
+            Public ReadOnly Property conv_ovf_u2_un As New Instructions.conv_ovf_u2_un
+            Public ReadOnly Property conv_ovf_u4_un As New Instructions.conv_ovf_u4_un
+            Public ReadOnly Property conv_ovf_u8_un As New Instructions.conv_ovf_u8_un
+            Public ReadOnly Property conv_ovf_i_un As New Instructions.conv_ovf_i_un
+            Public ReadOnly Property conv_ovf_u_un As New Instructions.conv_ovf_u_un
 
+
+            Public ReadOnly Property conv_ovf_i1 As New Instructions.conv_ovf_i1
+            Public ReadOnly Property conv_ovf_i2 As New Instructions.conv_ovf_i2
+            Public ReadOnly Property conv_ovf_i4 As New Instructions.conv_ovf_i4
+            Public ReadOnly Property conv_ovf_i8 As New Instructions.conv_ovf_i8
+            Public ReadOnly Property conv_ovf_u1 As New Instructions.conv_ovf_u1
+            Public ReadOnly Property conv_ovf_u2 As New Instructions.conv_ovf_u2
+            Public ReadOnly Property conv_ovf_u4 As New Instructions.conv_ovf_u4
+            Public ReadOnly Property conv_ovf_u8 As New Instructions.conv_ovf_u8
+            Public ReadOnly Property conv_ovf_i As New Instructions.conv_ovf_i
+            Public ReadOnly Property conv_ovf_u As New Instructions.conv_ovf_u
+
+            Public ReadOnly Property conv_i1 As New Instructions.conv_i1
+            Public ReadOnly Property conv_i2 As New Instructions.conv_i2
+            Public ReadOnly Property conv_i4 As New Instructions.conv_i4
+            Public ReadOnly Property conv_i8 As New Instructions.conv_i8
+            Public ReadOnly Property conv_u1 As New Instructions.conv_u1
+            Public ReadOnly Property conv_u2 As New Instructions.conv_u2
+            Public ReadOnly Property conv_u4 As New Instructions.conv_u4
+            Public ReadOnly Property conv_u8 As New Instructions.conv_u8
+            Public ReadOnly Property conv_r4 As New Instructions.conv_r4
+            Public ReadOnly Property conv_r8 As New Instructions.conv_r8
+            Public ReadOnly Property conv_i As New Instructions.conv_i
+            Public ReadOnly Property conv_u As New Instructions.conv_u
+            Public ReadOnly Property conv_r_un As New Instructions.conv_r_un
             Public Function switch(n As UInt32, cases As List(Of Int32)) As Instructions.switch
                 Return New IL.Instructions.switch(n, cases)
             End Function
@@ -1736,6 +1771,14 @@
 
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_i)
+            End Sub
+
+        End Class
+        Public Class conv_u
+            Inherits IL_Instruction
+
+            Public Sub New()
+                MyBase.New(OpCode.OpCodes.conv_u)
             End Sub
 
         End Class
