@@ -23,8 +23,49 @@
             Public ReadOnly Property ret As New Instructions.ret()
 
             Public ReadOnly Property add As New Instructions.add()
+            Public ReadOnly Property add_ovf As New Instructions.add_ovf()
+            Public ReadOnly Property add_ovf_un As New Instructions.add_ovf_un()
+
+            Public Function beq_s(b0 As Byte) As Instructions.beq_s
+                Return New Instructions.beq_s(b0)
+            End Function
+            Public Function blt_s(b0 As Byte) As Instructions.blt_s
+                Return New Instructions.blt_s(b0)
+            End Function
+            Public Function ble_s(b0 As Byte) As Instructions.ble_s
+                Return New Instructions.ble_s(b0)
+            End Function
+            Public Function bgt_s(b0 As Byte) As Instructions.bgt_s
+                Return New Instructions.bgt_s(b0)
+            End Function
+            Public Function bge_s(b0 As Byte) As Instructions.bge_s
+                Return New Instructions.bge_s(b0)
+            End Function
+
+
+            Public Function beq(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte) As Instructions.beq
+                Return New Instructions.beq(b0, b1, b2, b3)
+            End Function
+            Public Function bge(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte) As Instructions.bge
+                Return New Instructions.bge(b0, b1, b2, b3)
+            End Function
+
+            Public Function bgt(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte) As Instructions.bgt
+                Return New Instructions.bgt(b0, b1, b2, b3)
+            End Function
+            Public Function ble(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte) As Instructions.ble
+                Return New Instructions.ble(b0, b1, b2, b3)
+            End Function
+            Public Function blt(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte) As Instructions.blt
+                Return New Instructions.blt(b0, b1, b2, b3)
+            End Function
+
             Public ReadOnly Property [sub] As New Instructions.sub()
+            Public ReadOnly Property sub_ovf As New Instructions.sub_ovf()
+            Public ReadOnly Property sub_ovf_un As New Instructions.sub_ovf_un()
             Public ReadOnly Property mul As New Instructions.mul()
+            Public ReadOnly Property mul_ovf As New Instructions.mul_ovf()
+            Public ReadOnly Property mul_ovf_un As New Instructions.mul_ovf_un()
             Public ReadOnly Property div As New Instructions.div()
             Public ReadOnly Property div_u As New Instructions.div_un()
 
@@ -436,56 +477,62 @@
                 End Sub
 
             End Class
-            Public Class brtrue_s
-                Inherits IL_Instruction
+        Public Class brtrue_s
+            Inherits IL_Instruction
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.brtrue_s)
-                End Sub
+            Public Sub New()
+                MyBase.New(OpCode.OpCodes.brtrue_s)
+            End Sub
 
-            End Class
-            Public Class beq_s
-                Inherits IL_Instruction
+        End Class
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.beq_s)
-                End Sub
+        Public Class beq
+            Inherits ILOpWithTarget
 
-            End Class
-            Public Class bge_s
-                Inherits IL_Instruction
+            Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
+                MyBase.New(OpCode.OpCodes.beq)
+                Me._target = New Target_4(b0, b1, b2, b3)
+            End Sub
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.bge_s)
-                End Sub
+        End Class
+        Public Class bge
+            Inherits ILOpWithTarget
 
-            End Class
-            Public Class bgt_s
-                Inherits IL_Instruction
+            Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
+                MyBase.New(OpCode.OpCodes.bge)
+                Me._target = New Target_4(b0, b1, b2, b3)
+            End Sub
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.bgt_s)
-                End Sub
+        End Class
+        Public Class bgt
+            Inherits ILOpWithTarget
 
-            End Class
-            Public Class ble_s
-                Inherits IL_Instruction
+            Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
+                MyBase.New(OpCode.OpCodes.bgt)
+                Me._target = New Target_4(b0, b1, b2, b3)
+            End Sub
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.ble_s)
-                End Sub
+        End Class
+        Public Class ble
+            Inherits ILOpWithTarget
 
-            End Class
+            Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
+                MyBase.New(OpCode.OpCodes.ble)
+                Me._target = New Target_4(b0, b1, b2, b3)
+            End Sub
 
-            Public Class blt_s
-                Inherits IL_Instruction
+        End Class
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.blt_s)
-                End Sub
+        Public Class blt
+            Inherits ILOpWithTarget
 
-            End Class
-            Public Class bne_un_s
+            Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
+                MyBase.New(OpCode.OpCodes.blt)
+                Me._target = New Target_4(b0, b1, b2, b3)
+            End Sub
+
+        End Class
+        Public Class bne_un_s
                 Inherits IL_Instruction
 
                 Public Sub New()
@@ -567,48 +614,56 @@
                 End Sub
 
             End Class
-            Public Class beq
-                Inherits IL_Instruction
+        Public Class beq_s
+            Inherits IL.ILOpWithTarget
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.beq)
-                End Sub
+            Public Sub New(b0 As Byte)
+                MyBase.New(OpCode.OpCodes.beq_s)
+                Me._target = New Target_1(b0)
+            End Sub
 
-            End Class
-            Public Class bge
-                Inherits IL_Instruction
+        End Class
+        Public Class bge_s
+            Inherits ILOpWithTarget
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.bge)
-                End Sub
+            Public Sub New(b0 As Integer)
+                MyBase.New(OpCode.OpCodes.bge_s)
+                Me._target = New Target_1(b0)
 
-            End Class
-            Public Class bgt
-                Inherits IL_Instruction
+            End Sub
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.bgt)
-                End Sub
+        End Class
+        Public Class bgt_s
+            Inherits ILOpWithTarget
 
-            End Class
-            Public Class ble
-                Inherits IL_Instruction
+            Public Sub New(b0 As Integer)
+                MyBase.New(OpCode.OpCodes.bgt_s)
+                Me._target = New Target_1(b0)
+            End Sub
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.ble)
-                End Sub
+        End Class
+        Public Class ble_s
+            Inherits ILOpWithTarget
 
-            End Class
-            Public Class blt
-                Inherits IL_Instruction
+            Public Sub New(b0 As Integer)
+                MyBase.New(OpCode.OpCodes.ble_s)
+                Me._target = New Target_1(b0)
 
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.blt)
-                End Sub
+            End Sub
 
-            End Class
+        End Class
+        Public Class blt_s
+            Inherits ILOpWithTarget
 
-            Public Class bne_un
+            Public Sub New(b0 As Byte)
+                MyBase.New(OpCode.OpCodes.blt_s)
+                Me._target = New Target_1(b0)
+
+            End Sub
+
+        End Class
+
+        Public Class bne_un
                 Inherits IL_Instruction
 
                 Public Sub New()

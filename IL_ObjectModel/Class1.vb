@@ -113,12 +113,7 @@ Public Class ByteCode_Decoder
                 ' ''
                 ''Case &H2D : code.Add(Asm.brinst_s)
                 ''Case &H2D : code.Add(Asm.brtrue)
-
-                'Case &H2E : code.Add(Asm.beq_s)
-                'Case &H2F : code.Add(Asm.bge_s)
-                'Case &H30 : code.Add(Asm.blt_s)
-                'Case &H31 : code.Add(Asm.ble_s)
-                'Case &H32 : code.Add(Asm.blt_s)
+                Case &H2E, &H2F, &H30, &H31, &H32 : ReadBranch(b, bytes, code)
                 'Case &H33 : code.Add(Asm.bne_un_s)
                 'Case &H34 : code.Add(Asm.bge_un_s)
                 'Case &H35 : code.Add(Asm.bgt_un_s)
@@ -131,11 +126,7 @@ Public Class ByteCode_Decoder
                 '' Case &H39 : code.Add(Asm.brzero)
                 ''
                 'Case &H3A : code.Add(Asm.brinst)
-                'Case &H38 : code.Add(Asm.beq)
-                'Case &H3C : code.Add(Asm.bge)
-                'Case &H3D : code.Add(Asm.bgt)
-                'Case &H3E : code.Add(Asm.ble)
-                'Case &H3F : code.Add(Asm.blt)
+                Case &H38, &H3C, &H3D, &H3E, &H3F : ReadBranch(b, bytes, code)
                 'Case &H40 : code.Add(Asm.bne_un)
                 'Case &H41 : code.Add(Asm.bge_un)
                 'Case &H42 : code.Add(Asm.bgt_un)
@@ -177,9 +168,16 @@ Public Class ByteCode_Decoder
                 'Case &H62 : code.Add(Asm.shl)
                 'Case &H63 : code.Add(Asm.shr)
                 'Case &H64 : code.Add(Asm.shr_u)
-                'Case &H65 : code.Add(Asm.neg)
-                'Case &H66 : code.Add(Asm.not)
+                Case &H65 : code.Add(Asm.neg)
+                Case &H66 : code.Add(Asm.not)
                 ''
+                Case &HD6 : code.Add(Asm.add_ovf)
+                Case &HD7 : code.Add(Asm.add_ovf_un)
+                Case &HD6 : code.Add(Asm.sub_ovf)
+                Case &HD7 : code.Add(Asm.sub_ovf_un)
+                Case &HD6 : code.Add(Asm.mul_ovf)
+                Case &HD7 : code.Add(Asm.mul_ovf_un)
+
 
                 ''
                 'Case &HFE : code = ReadExtended(bytes, code)
@@ -188,6 +186,25 @@ Public Class ByteCode_Decoder
             End Select
         End While
 
+        Return code
+    End Function
+
+    Private Function ReadBranch(b As Byte, bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
+        Select Case b
+            Case &H3B : code.Add(Asm.beq(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
+            Case &H3C : code.Add(Asm.bge(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
+            Case &H3D : code.Add(Asm.bgt(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
+            Case &H3E : code.Add(Asm.ble(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
+            Case &H3F : code.Add(Asm.blt(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
+
+            Case &H2E : code.Add(Asm.beq_s(bytes.ReadByte))
+            Case &H2F : code.Add(Asm.bge_s(bytes.ReadByte))
+            Case &H30 : code.Add(Asm.bgt_s(bytes.ReadByte))
+            Case &H31 : code.Add(Asm.ble_s(bytes.ReadByte))
+            Case &H32 : code.Add(Asm.blt_s(bytes.ReadByte))
+            Case Else
+                Throw New UnrecognisedByteCode(b)
+        End Select
         Return code
     End Function
 
