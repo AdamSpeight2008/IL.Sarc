@@ -535,92 +535,69 @@
         End Class
         Public Class ldc_i4_7
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldc_i4_7)
             End Sub
-
         End Class
         Public Class ldc_i4_8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldc_i4_8)
             End Sub
-
         End Class
         Public Class ldc_i4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldc_i4)
             End Sub
-
         End Class
         Public Class ldc_i8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldc_i8)
             End Sub
-
         End Class
         Public Class ldc_r4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldc_r4)
             End Sub
-
         End Class
         Public Class ldc_r8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldc_r8)
             End Sub
-
         End Class
-
         Public Class dup
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.dup)
             End Sub
-
         End Class
         Public Class pop
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.pop)
             End Sub
-
         End Class
         Public Class jmp
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.jmp)
             End Sub
-
         End Class
         Public Class [call]
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.call)
             End Sub
-
         End Class
         Public Class calli
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.calli)
             End Sub
-
         End Class
         Public Class ret
             Inherits IL_Instruction
@@ -671,7 +648,6 @@
             End Sub
 
         End Class
-
         Public Class beq
             Inherits ILOp_b4
 
@@ -712,7 +688,6 @@
             End Sub
 
         End Class
-
         Public Class bne_un_s
             Inherits ILOp_b1
 
@@ -753,7 +728,6 @@
             End Sub
 
         End Class
-
         Public Class br_s
             Inherits ILOp_b1
             Public Sub New(b0 As Byte)
@@ -769,8 +743,6 @@
             End Sub
 
         End Class
-
-
         Public Class brfalse
             Inherits ILOp_b4
             Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
@@ -778,7 +750,6 @@
             End Sub
 
         End Class
-
         Public Class brnull
             Inherits ILOp_b4
             Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
@@ -791,21 +762,18 @@
             Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
                 MyBase.New(OpCode.OpCodes.brzero, b0, b1, b2, b3)
             End Sub
-
         End Class
         Public Class brtrue
             Inherits ILOp_b4
             Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
                 MyBase.New(OpCode.OpCodes.brtrue, b0, b1, b2, b3)
             End Sub
-
         End Class
         Public Class brinst
             Inherits ILOp_b4
             Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
                 MyBase.New(OpCode.OpCodes.brinist, b0, b1, b2, b3)
             End Sub
-
         End Class
         Public Class beq_s
             Inherits IL.ILOp_b1
@@ -850,7 +818,6 @@
             End Sub
 
         End Class
-
         Public Class bne_un
             Inherits ILOp_b4
             Public Sub New(b0 As Byte, b1 As Byte, b2 As Byte, b3 As Byte)
@@ -881,8 +848,6 @@
                 MyBase.New(OpCode.OpCodes.blt_un, b0, b1, b2, b3)
             End Sub
         End Class
-
-
         Public Class ldind_i1
             Inherits IL_Instruction
 
@@ -949,11 +914,9 @@
         End Class
         Public Class ldind_i
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldind_i)
             End Sub
-
         End Class
         Public Class ldind_r4
             Inherits IL_Instruction
@@ -973,81 +936,58 @@
         End Class
         Public Class ldind_ref
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldind_ref)
             End Sub
-
         End Class
-
         Public Class stind_ref
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stind_ref)
             End Sub
-
         End Class
-
         Public Class stind_i1
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stind_i1)
             End Sub
-
         End Class
         Public Class stind_i2
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stind_i2)
             End Sub
-
         End Class
         Public Class stind_i4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stind_i4)
             End Sub
-
         End Class
         Public Class stind_i8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stind_i8)
             End Sub
-
         End Class
-
         Public Class stind_r4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stind_r4)
             End Sub
-
         End Class
         Public Class stind_r8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stind_r8)
             End Sub
-
         End Class
-
         Public Class stind_i
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stind_i)
             End Sub
-
         End Class
-
         Public Class add
             Inherits IL_Instruction
 
@@ -1104,7 +1044,6 @@
             End Sub
 
         End Class
-
         Public Class [or]
             Inherits IL_Instruction
 
@@ -1169,195 +1108,143 @@
             End Sub
 
         End Class
-
-
         Public Class conv_i1
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_i1)
             End Sub
-
         End Class
         Public Class conv_i2
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_i2)
             End Sub
-
         End Class
         Public Class conv_i4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_i4)
             End Sub
-
         End Class
         Public Class conv_i8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_i8)
             End Sub
-
         End Class
         Public Class conv_r4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_r4)
             End Sub
-
         End Class
         Public Class conv_r8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_r8)
             End Sub
-
         End Class
         Public Class conv_u4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_r4)
             End Sub
-
         End Class
         Public Class conv_u8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_r8)
             End Sub
-
         End Class
-
-
         Public Class callvirt
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.callvirt)
             End Sub
-
         End Class
         Public Class cpobj
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.cpobj)
             End Sub
-
         End Class
         Public Class ldobj
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldobj)
             End Sub
-
         End Class
         Public Class lrstr
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.lrstr)
             End Sub
-
         End Class
         Public Class newpobj
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.newobj)
             End Sub
-
         End Class
         Public Class castclass
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.castclass)
             End Sub
-
         End Class
         Public Class isinst
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.isinst)
             End Sub
-
         End Class
-
         Public Class conv_r_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_r_un)
             End Sub
-
         End Class
         Public Class unbox
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.unbox)
             End Sub
-
         End Class
-
         Public Class ldfld
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldfld)
             End Sub
-
         End Class
         Public Class ldflda
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldflda)
             End Sub
-
         End Class
         Public Class stfld
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stfld)
             End Sub
-
         End Class
         Public Class ldsfld
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldsfld)
             End Sub
-
         End Class
         Public Class ldsflda
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldsflda)
             End Sub
-
         End Class
         Public Class stsfld
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stsfld)
             End Sub
-
         End Class
         Public Class stobj
             Inherits IL_Instruction
@@ -1365,780 +1252,559 @@
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stobj)
             End Sub
-
         End Class
-
         Public Class conv_ovf_i1_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i1_un)
             End Sub
-
         End Class
         Public Class conv_ovf_i2_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i2_un)
             End Sub
-
         End Class
         Public Class conv_ovf_i4_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i4_un)
             End Sub
-
         End Class
         Public Class conv_ovf_i8_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i8_un)
             End Sub
-
         End Class
-
         Public Class conv_ovf_u1_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u1_un)
             End Sub
-
         End Class
         Public Class conv_ovf_u2_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u2_un)
             End Sub
-
         End Class
         Public Class conv_ovf_u4_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u4_un)
             End Sub
-
         End Class
         Public Class conv_ovf_u8_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u8_un)
             End Sub
-
         End Class
-
-
         Public Class conv_ovf_i_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i_un)
             End Sub
-
         End Class
-
         Public Class conv_ovf_u_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u_un)
             End Sub
-
         End Class
-
         Public Class box
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.box)
             End Sub
-
         End Class
-
         Public Class newarr
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.newarr)
             End Sub
-
         End Class
-
         Public Class ldlen
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldlen)
             End Sub
-
         End Class
         Public Class ldelema
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelema)
             End Sub
-
         End Class
         Public Class ldelem_i1
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_i1)
             End Sub
-
         End Class
         Public Class ldelem_u1
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_u1)
             End Sub
-
         End Class
         Public Class ldelem_i2
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_i2)
             End Sub
-
         End Class
         Public Class ldelem_u2
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_u2)
             End Sub
-
         End Class
         Public Class ldelem_i4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_i4)
             End Sub
-
         End Class
         Public Class ldelem_u4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_u4)
             End Sub
-
         End Class
-
         Public Class ldelem_i8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_i8)
             End Sub
-
         End Class
         Public Class ldelem_u8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_u8)
             End Sub
-
         End Class
-
         Public Class ldelem_i
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_i)
             End Sub
-
         End Class
         Public Class ldelem_r4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_r4)
             End Sub
-
         End Class
-
         Public Class ldelem_r8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_r8)
             End Sub
-
         End Class
         Public Class ldelem_ref
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem_ref)
             End Sub
-
         End Class
-
-
         Public Class stelem_i
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stelem_i)
             End Sub
-
         End Class
-
         Public Class stelem_i1
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stelem_i1)
             End Sub
-
         End Class
         Public Class stelem_i2
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stelem_i2)
             End Sub
-
         End Class
         Public Class stelem_i4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stelem_i4)
             End Sub
-
         End Class
         Public Class stelem_i8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stelem_i8)
             End Sub
-
         End Class
         Public Class stelem_r4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stelem_r4)
             End Sub
-
         End Class
         Public Class stelem_r8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stelem_r8)
             End Sub
-
         End Class
-
-
         Public Class stelem
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stelem)
             End Sub
-
         End Class
         Public Class ldelem
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldelem)
             End Sub
-
         End Class
-
         Public Class unbox_any
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.unbox_any)
             End Sub
-
         End Class
         Public Class conv_ovf_i1
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i1)
             End Sub
-
         End Class
         Public Class conv_ovf_u1
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u1)
             End Sub
-
         End Class
         Public Class conv_ovf_i2
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i2)
             End Sub
-
         End Class
         Public Class conv_ovf_u2
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u2)
             End Sub
-
         End Class
         Public Class conv_ovf_i4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i4)
             End Sub
-
         End Class
         Public Class conv_ovf_u4
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u4)
             End Sub
-
         End Class
         Public Class conv_ovf_i8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i8)
             End Sub
-
         End Class
         Public Class conv_ovf_u8
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u8)
             End Sub
-
         End Class
-
         Public Class refanyval
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.refanyval)
             End Sub
-
         End Class
         Public Class ckfinite
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ckfinite)
             End Sub
-
         End Class
-
         Public Class cldtoken
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.cldtoken)
             End Sub
-
         End Class
-
         Public Class conv_u2
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_u2)
             End Sub
-
         End Class
-
         Public Class conv_u1
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_u1)
             End Sub
-
         End Class
-
         Public Class conv_i
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_i)
             End Sub
-
         End Class
         Public Class conv_u
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_u)
             End Sub
-
         End Class
         Public Class conv_ovf_i
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_i)
             End Sub
-
         End Class
-
         Public Class conv_ovf_u
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.conv_ovf_u)
             End Sub
-
         End Class
-
         Public Class add_ovf
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.add_ovf)
             End Sub
-
         End Class
         Public Class add_ovf_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.add_ovf_un)
             End Sub
-
         End Class
         Public Class mul_ovf
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.mul_ovf)
             End Sub
-
         End Class
         Public Class mul_ovf_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.mul_ovf_un)
             End Sub
-
         End Class
-
         Public Class sub_ovf
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.sub_ovf)
             End Sub
-
         End Class
         Public Class sub_ovf_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.sub_ovf_un)
             End Sub
-
         End Class
-
-
         Public Class ceq
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ceq)
             End Sub
-
         End Class
         Public Class cgt
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.cgt)
             End Sub
-
         End Class
         Public Class cgt_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.cgt_un)
             End Sub
-
         End Class
         Public Class clt
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.clt)
             End Sub
-
         End Class
         Public Class clt_un
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.clt_un)
             End Sub
-
         End Class
-
         Public Class ldftn
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldftn)
             End Sub
-
         End Class
         Public Class ldvirtftn
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldvirtftn)
             End Sub
-
         End Class
         Public Class ldarg
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldarg)
             End Sub
-
         End Class
-
         Public Class ldarga
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldarga)
             End Sub
-
         End Class
-
         Public Class starg
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.starg)
             End Sub
-
         End Class
-
-
         Public Class ldloc
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldloc)
             End Sub
-
         End Class
-
         Public Class ldloca
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldloca)
             End Sub
-
         End Class
         Public Class stloc
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.stloc)
             End Sub
-
         End Class
         Public Class localloc
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.localloc)
             End Sub
-
         End Class
-
         Public Class endfilter
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.endfilter)
             End Sub
-
         End Class
         Public Class endfault
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.endfault)
             End Sub
-
         End Class
         Public Class endfinally
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.endfinally)
             End Sub
-
         End Class
         Public Class unaligned_
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.unaligned_)
             End Sub
-
         End Class
         Public Class volatile_
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.volatile_)
             End Sub
-
         End Class
         Public Class [throw]
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.throw)
             End Sub
         End Class
-
         Public Class tail_
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.tail_)
             End Sub
-
         End Class
-
         Public Class initobj
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.initobj)
             End Sub
-
         End Class
-
         Public Class constraied
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.constrained)
             End Sub
-
         End Class
-
         Public Class cpblk
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.cpblk)
             End Sub
-
         End Class
-
         Public Class initblk
             Inherits IL_Instruction
-
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.initblk)
             End Sub
-
-            End Class
-
-            Public Class no_
-                Inherits IL_Instruction
-
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.no_)
-                End Sub
-
-            End Class
-
-
-            Public Class rethrow
-                Inherits IL_Instruction
-
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.rethrow)
-                End Sub
-
-            End Class
-
-            Public Class sizeof
-                Inherits IL_Instruction
-
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.sizeof)
-                End Sub
-
-            End Class
-
-
-            Public Class refanytype_
-                Inherits IL_Instruction
-
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.refanytype_)
-                End Sub
-
-            End Class
-
-            Public Class readonly_
-                Inherits IL_Instruction
-
-                Public Sub New()
-                    MyBase.New(OpCode.OpCodes.readonly_)
-                End Sub
-
-            End Class
+        End Class
+        Public Class no_
+            Inherits IL_Instruction
+            Public Sub New()
+                MyBase.New(OpCode.OpCodes.no_)
+            End Sub
+        End Class
+        Public Class rethrow
+            Inherits IL_Instruction
+            Public Sub New()
+                MyBase.New(OpCode.OpCodes.rethrow)
+            End Sub
+        End Class
+        Public Class sizeof
+            Inherits IL_Instruction
+            Public Sub New()
+                MyBase.New(OpCode.OpCodes.sizeof)
+            End Sub
+        End Class
+        Public Class refanytype_
+            Inherits IL_Instruction
+            Public Sub New()
+                MyBase.New(OpCode.OpCodes.refanytype_)
+            End Sub
+        End Class
+        Public Class readonly_
+            Inherits IL_Instruction
+            Public Sub New()
+                MyBase.New(OpCode.OpCodes.readonly_)
+            End Sub
+        End Class
+        Public Class switch
+            Inherits IL_Instruction
+            Private ReadOnly Property Labels As New List(Of Int32)
+            Sub New(n As UInt32, cases As List(Of Int32))
+                MyBase.New(OpCode.OpCodes.switch)
+                Labels.Capacity = n
+                Labels.AddRange(cases)
+            End Sub
+            Public Overrides Function GetBytes() As Byte()
+                Dim b = Labels.SelectMany(Function(s As Int32) BitConverter.GetBytes(s))
+                Dim n = BitConverter.GetBytes(CUInt(Labels.Count))
 
 
-
-            Public Class switch
-                Inherits IL_Instruction
-                Private ReadOnly Property Labels As New List(Of Int32)
-
-                Sub New(n As UInt32, cases As List(Of Int32))
-                    MyBase.New(OpCode.OpCodes.switch)
-                    Labels.Capacity = n
-                    Labels.AddRange(cases)
-                End Sub
-                Public Overrides Function Size() As Integer
-                    Return MyBase.Size() + (Label.Size * Labels.Count) + 4
-                End Function
-            End Class
+                Return MyBase.GetBytes().Concat(n).Concat(b).ToArray
+            End Function
+            Public Overrides Function Size() As Integer
+                Return MyBase.Size() + (Label.Size * Labels.Count) + 4
+            End Function
+        End Class
     End Namespace
 End Namespace
