@@ -112,6 +112,21 @@
             Public ReadOnly Property conv_i As New Instructions.conv_i
             Public ReadOnly Property conv_u As New Instructions.conv_u
             Public ReadOnly Property conv_r_un As New Instructions.conv_r_un
+
+            Public ReadOnly Property clt As New Instructions.clt
+
+            Public ReadOnly Property clt_un As New Instructions.clt_un
+
+            Public ReadOnly Property cgt As New Instructions.cgt
+
+            Public ReadOnly Property cgt_un As New Instructions.cgt_un
+
+            Public ReadOnly Property ceq As New Instructions.ceq
+
+
+
+            Public ReadOnly Property ckfinite As New Instructions.ckfinite
+
             Public Function switch(n As UInt32, cases As List(Of Int32)) As Instructions.switch
                 Return New IL.Instructions.switch(n, cases)
             End Function
