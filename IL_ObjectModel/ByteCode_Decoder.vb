@@ -125,8 +125,8 @@ Public Class ByteCode_Decoder
                 Case &H25 : code.Add(Asm.dup)
                 Case &H26 : code.Add(Asm.pop)
                 'Case &H27 : code.Add(Asm.jmp)
-                'Case &H28 : code.Add(Asm.call)
-                'Case &H29 : code.Add(Asm.calli)
+                Case &H28, &H29
+                    ReadCall(b, bytes, code)
                 Case &H2A : code.Add(Asm.ret)
                 ' - Branching IL
                 Case &H28, &H2B, &H2C, &H2D, &H2E, &H2F
@@ -187,7 +187,7 @@ Public Class ByteCode_Decoder
                 Case &H6C : code.Add(Asm.conv_r8)
                 Case &H6D : code.Add(Asm.conv_u4)
                 Case &H6E : code.Add(Asm.conv_u8)
-                'Case &H6F
+                Case &H6F : ReadCall(b, bytes, code)
 #End Region
 #Region "0x7_"
                 Case &H7A : code.Add(Asm.throw)
@@ -230,7 +230,7 @@ Public Class ByteCode_Decoder
 #Region "0xA_"
 
 #End Region
-#Region "0xBD_"
+#Region "0xB_"
                 'Case &HB0
                 'Case &HB1
                 Case &HB2 : code.Add(Asm.conv_ovf_i1)
@@ -303,6 +303,22 @@ Public Class ByteCode_Decoder
 
         Return code
     End Function
+
+    Private Function ReadCall(b As Byte, bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
+        Select Case b
+            Case &H28
+                Dim addr = bytes.Read_Int32
+                code.Add(Asm.call(addr))
+            Case &H29
+                Dim addr = bytes.Read_Int32
+                code.Add(Asm.calli(addr))
+            Case &H6F
+            Case Else
+                Throw New UnrecognisedByteCode(b)
+        End Select
+        Return code
+    End Function
+
     Private Function ReadBranch(b As Byte, bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
         Select Case b
             ' Short Branch

@@ -123,6 +123,15 @@
 
             Public ReadOnly Property ceq As New Instructions.ceq
 
+            Public Function [call](addr As Int32) As Instructions.call
+                Return New Instructions.call(addr)
+            End Function
+            Public Function calli(addr As Int32) As Instructions.calli
+                Return New Instructions.calli(addr)
+            End Function
+            Public Function callvirt(addr As Int32) As Instructions.callvirt
+                Return New Instructions.callvirt(addr)
+            End Function
 
 
             Public ReadOnly Property ckfinite As New Instructions.ckfinite
@@ -587,16 +596,31 @@
                 MyBase.New(OpCode.OpCodes.jmp)
             End Sub
         End Class
-        Public Class [call]
+
+        Public MustInherit Class IL_Int32
             Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.call)
+            Public ReadOnly Property Addr As Int32
+            Public Sub New(opcode As OpCode, addr As Int32)
+                MyBase.New(opcode)
+                Me.Addr = addr
             End Sub
+            Public Overrides Function GetBytes() As Byte()
+                Return MyBase.GetBytes().Concat(BitConverter.GetBytes(Addr))
+            End Function
+
+        End Class
+
+        Public Class [call]
+            Inherits IL_Int32
+            Public Sub New(addr As Int32)
+                MyBase.New(OpCode.OpCodes.call, addr)
+            End Sub
+
         End Class
         Public Class calli
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.calli)
+            Inherits IL_Int32
+            Public Sub New(addr As Int32)
+                MyBase.New(OpCode.OpCodes.calli, addr)
             End Sub
         End Class
         Public Class ret
@@ -1157,9 +1181,9 @@
             End Sub
         End Class
         Public Class callvirt
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.callvirt)
+            Inherits IL_Int32
+            Public Sub New(addr As Int32)
+                MyBase.New(OpCode.OpCodes.callvirt, addr)
             End Sub
         End Class
         Public Class cpobj
