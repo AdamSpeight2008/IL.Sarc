@@ -286,6 +286,7 @@ Public Class ByteCode_Decoder
                 'Case &HDA
                 'Case &HDB
                 Case &HDC : code.Add(Asm.endfinally)
+                'Case &HDD
                 'Case &HDE
                 Case &HDF : code.Add(Asm.stind_i)
 #End Region
@@ -312,6 +313,8 @@ Public Class ByteCode_Decoder
                 Dim addr = bytes.Read_4Bytes
                 code.Add(Asm.calli(addr))
             Case &H6F
+                Dim addr = bytes.Read_4Bytes
+                code.Add(Asm.callvirt(addr))
             Case Else
                 Throw New UnrecognisedByteCode(b)
         End Select
@@ -366,7 +369,6 @@ Public Class ByteCode_Decoder
         Return code
     End Function
 
-
     Private Function Read_MetaDataToken(b As Byte, bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
         Select Case b
             Case &H27
@@ -376,6 +378,7 @@ Public Class ByteCode_Decoder
         End Select
         Return code
     End Function
+
     Private Function ReadSwitch(b As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
         Dim N = CUInt(b.Read_4Bytes)
         Dim cases As New List(Of Int32)(N)
