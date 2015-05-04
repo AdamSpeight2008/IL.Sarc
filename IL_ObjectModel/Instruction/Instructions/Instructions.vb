@@ -133,6 +133,9 @@
                 Return New Instructions.callvirt(addr)
             End Function
 
+            Public ReadOnly Property volatile_() As New Instructions.volatile_
+            Public ReadOnly Property tail_() As New Instructions.tail_
+            Public ReadOnly Property ArgList() As New Instructions.arglist
 
             Public ReadOnly Property ckfinite As New Instructions.ckfinite
 
@@ -140,7 +143,9 @@
                 Return New IL.Instructions.switch(n, cases)
             End Function
 
-
+            Public Function jmp(b4 As UInt32) As Instructions.jmp
+                Return New Instructions.jmp(New MetadataToken(b4))
+            End Function
 
 #Region "Branches"
 #Region "Short"
@@ -295,7 +300,13 @@
                 MyBase.New(OpCode.OpCodes.nop)
             End Sub
         End Class
+        Public Class arglist
+            Inherits IL_Instruction
 
+            Protected Friend Sub New()
+                MyBase.New(OpCode.OpCodes.arglist)
+            End Sub
+        End Class
         Public Class break
             Inherits IL_Instruction
 
@@ -590,12 +601,7 @@
                 MyBase.New(OpCode.OpCodes.pop)
             End Sub
         End Class
-        Public Class jmp
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.jmp)
-            End Sub
-        End Class
+
 
         Public MustInherit Class IL_Int32
             Inherits IL_Instruction
@@ -609,6 +615,29 @@
             End Function
 
         End Class
+
+        Public MustInherit Class IL_MetedataToken
+            Inherits IL_Instruction
+            Public ReadOnly Property Token As MetadataToken
+            Public Sub New(opcode As OpCode, Token As MetadataToken)
+                MyBase.New(opcode)
+                Me.Token = Token
+            End Sub
+            Public Overrides Function GetBytes() As Byte()
+                Return MyBase.GetBytes().Concat(Me.Token.GetBytes())
+            End Function
+
+        End Class
+
+        Public Class jmp
+            Inherits IL_MetedataToken
+
+            Public Sub New(Token As MetadataToken)
+                MyBase.New(OpCode.OpCodes.jmp, Token)
+            End Sub
+
+        End Class
+
 
         Public Class [call]
             Inherits IL_Int32

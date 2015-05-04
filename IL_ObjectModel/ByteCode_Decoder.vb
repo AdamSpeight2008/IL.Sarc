@@ -118,10 +118,11 @@ Public Class ByteCode_Decoder
                 'Case &H21 : code.Add(Asm.ldc_i8)
                 'Case &H22 : code.Add(Asm.ldc_r4)
                 'Case &H23 : code.Add(Asm.ldc_r8)
-                'Case &H240
+                'Case &H24
                 Case &H25 : code.Add(Asm.dup)
                 Case &H26 : code.Add(Asm.pop)
-                'Case &H27 : code.Add(Asm.jmp)
+                Case &H27
+                    Read_MetaDataToken(b, bytes, code)
                 Case &H28, &H29
                     ReadCall(b, bytes, code)
                 Case &H2A : code.Add(Asm.ret)
@@ -188,6 +189,7 @@ Public Class ByteCode_Decoder
 #End Region
 #Region "0x7_"
                 Case &H7A : code.Add(Asm.throw)
+                Case &H76 : code.Add(Asm.conv_r_un)
 #End Region
 #Region "0x8_"
                 Case &H82 : code.Add(Asm.conv_ovf_i1_un)
@@ -230,15 +232,15 @@ Public Class ByteCode_Decoder
 #Region "0xB_"
                 'Case &HB0
                 'Case &HB1
-                Case &HB2 : code.Add(Asm.conv_ovf_i1)
-                Case &HB3 : code.Add(Asm.conv_ovf_i2)
-                Case &HB4 : code.Add(Asm.conv_ovf_i4)
-                Case &HB5 : code.Add(Asm.conv_ovf_i8)
-                Case &HB6 : code.Add(Asm.conv_ovf_u1)
-                Case &HB7 : code.Add(Asm.conv_ovf_u2)
+                'Case &HB2 : code.Add(Asm.conv_ovf_i1)
+                Case &HB3 : code.Add(Asm.conv_ovf_i1)
+                Case &HB4 : code.Add(Asm.conv_ovf_u1)
+                Case &HB5 : code.Add(Asm.conv_ovf_i2)
+                Case &HB6 : code.Add(Asm.conv_ovf_u2)
+                Case &HB7 : code.Add(Asm.conv_ovf_i4)
                 Case &HB8 : code.Add(Asm.conv_ovf_u4)
-                Case &HB9 : code.Add(Asm.conv_ovf_u8)
-                'Case &HBA
+                Case &HB9 : code.Add(Asm.conv_ovf_i8)
+                Case &HBA : code.Add(Asm.conv_ovf_u8)
                 'Case &HBB
                 'Case &HBC
                 'Case &HBD
@@ -288,7 +290,7 @@ Public Class ByteCode_Decoder
                 Case &HDF : code.Add(Asm.stind_i)
 #End Region
 #Region "0xE_"
-                Case &HE0 : code.Add(Asm.conv_r_un)
+                Case &HE0 : code.Add(Asm.conv_u)
 #End Region
 #Region "0xF_"
                 Case &HFE : code = Read_Prefixed(bytes, code)
@@ -365,6 +367,15 @@ Public Class ByteCode_Decoder
     End Function
 
 
+    Private Function Read_MetaDataToken(b As Byte, bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
+        Select Case b
+            Case &H27
+                Dim b4 = bytes.Read_4Bytes
+                code.Add(Asm.jmp(b4))
+            Case Else
+        End Select
+        Return code
+    End Function
     Private Function ReadSwitch(b As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
         Dim N = CUInt(b.Read_4Bytes)
         Dim cases As New List(Of Int32)(N)
@@ -379,7 +390,7 @@ Public Class ByteCode_Decoder
     Private Function Read_Prefixed(bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
         Dim b As Byte = bytes.ReadByte
         Select Case b
-            '    Case &H00 : code.Add(Asm.ArgList)
+            Case &H00 : code.Add(Asm.ArgList)
             Case &H01 : code.Add(Asm.ceq)
             Case &H02 : code.Add(Asm.cgt)
             Case &H03 : code.Add(Asm.cgt_un)
@@ -387,6 +398,7 @@ Public Class ByteCode_Decoder
             Case &H05 : code.Add(Asm.clt_un)
             '    Case &H06 : code.Add(Asm.ldftn)
             '    Case &H07 : code.Add(Asm.ldvirtftn)
+            'Case &H08 : code.Add(Asm.ldarg)
             '    Case &H09 : code.Add(Asm.ldarg)
             '    Case &H0A : code.Add(Asm.ldarga)
             '    Case &H0B : code.Add(Asm.starg)
@@ -394,10 +406,11 @@ Public Class ByteCode_Decoder
             '    Case &H0D : code.Add(Asm.ldloca)
             '    Case &H0E : code.Add(Asm.stloc)
             Case &H0F : code.Add(Asm.localloc)
+            'Case &H10
             Case &H11 : code.Add(Asm.EndFilter)
             '    Case &H12 : code.Add(Asm.unalligned)
-            '    Case &H13 : code.Add(Asm.volatile)
-            '    Case &H14 : code.Add(Asm.tail_)
+            Case &H13 : code.Add(Asm.volatile_)
+            Case &H14 : code.Add(Asm.tail_)
             '    Case &H15 : code.Add(Asm.initobj)
             '    Case &H16 : code.Add(Asm.constrained)
             Case &H17 : code.Add(Asm.cpblk)
