@@ -135,7 +135,7 @@ Public Class ByteCode_Decoder
                      &H38, &H39, &H3A, &H3B, &H3C, &H3D, &H3E, &H3F
                     ReadBranch(b, bytes, code)
 #End Region
-#Region "0x4"
+#Region "0x4_"
                 Case &H40, &H41, &H42, &H43, &H44
                     ReadBranch(b, bytes, code)
                 Case &H45 : ReadSwitch(bytes, code)
@@ -188,10 +188,26 @@ Public Class ByteCode_Decoder
                 Case &H6F : ReadCall(b, bytes, code)
 #End Region
 #Region "0x7_"
-                Case &H7A : code.Add(Asm.throw)
+                'Case &H70
+                'Case &H71
+                'Case &H72
+                'Case &H73
+                'Case &H74
+                'Case &H75
                 Case &H76 : code.Add(Asm.conv_r_un)
+                'Case &H77
+                'Case &H78
+                'Case &H79
+                Case &H7A : code.Add(Asm.throw)
+                'Case &H7B
+                'Case &H7C
+                'Case &H7D
+                'Case &H7E
+                'Case &H7F
 #End Region
 #Region "0x8_"
+                'Case &H80 'stsfld
+                'Case &H81 'stobj
                 Case &H82 : code.Add(Asm.conv_ovf_i1_un)
                 Case &H83 : code.Add(Asm.conv_ovf_i2_un)
                 Case &H84 : code.Add(Asm.conv_ovf_i4_un)
@@ -202,10 +218,11 @@ Public Class ByteCode_Decoder
                 Case &H89 : code.Add(Asm.conv_ovf_u8_un)
                 Case &H8A : code.Add(Asm.conv_ovf_i_un)
                 Case &H8B : code.Add(Asm.conv_ovf_u_un)
-                'Case &H8C
-                'Case &H8D
+                'Case &H8C 'box
+                'Case &H8D 'newarr
                 Case &H8E : code.Add(Asm.ldlen)
-                'Case &H8F
+                'Case &H8F 'ldelema
+
 #End Region
 #Region "0x9_"
                 Case &H90 : code.Add(Asm.ldlelem_i1)
@@ -220,19 +237,35 @@ Public Class ByteCode_Decoder
                 Case &H98 : code.Add(Asm.ldlelem_r4)
                 Case &H99 : code.Add(Asm.ldlelem_r8)
                 Case &H9A : code.Add(Asm.ldlelem_ref)
-                'Case &H9B
-                'Case &H9C
-                'Case &H9D
-                'Case &H9E
-                'Case &H9F
+                'Case &H9B 'stelem.i
+                'Case &H9C 'stelem.i1
+                'Case &H9D 'stelem.i2
+                'Case &H9E 'stelem.i4
+                'Case &H9F 'stelem.i8
+
 #End Region
 #Region "0xA_"
-
+                'Case &HA0 'stelem.r4
+                'Case &HA1 'stelem.r8
+                'Case &HA2 'stelem.ref
+                'Case &HA3 'ldelem
+                'Case &HA4 'stelem
+                'Case &HA5 'unbox.any
+                'Case &HA6
+                'Case &HA7
+                'Case &HA8
+                'Case &HA9
+                'Case &HAA
+                'Case &HAB
+                'Case &HAC
+                'Case &HAD
+                'Case &HAE
+                'Case &HAF
 #End Region
 #Region "0xB_"
                 'Case &HB0
                 'Case &HB1
-                'Case &HB2 : code.Add(Asm.conv_ovf_i1)
+                'Case &HB2 
                 Case &HB3 : code.Add(Asm.conv_ovf_i1)
                 Case &HB4 : code.Add(Asm.conv_ovf_u1)
                 Case &HB5 : code.Add(Asm.conv_ovf_i2)
@@ -268,23 +301,19 @@ Public Class ByteCode_Decoder
                 'Case &HCE
                 'Case &HCF
 #End Region
-#Region "0xD"
+#Region "0xD_"
                 'Case &HD0_
                 Case &HD1 : code.Add(Asm.conv_u2)
                 Case &HD2 : code.Add(Asm.conv_u1)
                 Case &HD3 : code.Add(Asm.conv_i)
-                Case &HD4 : code.Add(Asm.conv_ovf_i)   'Case &HD4 : code.Add(Asm.conv_i)
-                Case &HD5 : code.Add(Asm.conv_ovf_u)   'Case &HD5 : code.Add(Asm.conv_u)
+                Case &HD4 : code.Add(Asm.conv_ovf_i)
+                Case &HD5 : code.Add(Asm.conv_ovf_u)
                 Case &HD6 : code.Add(Asm.add_ovf)
                 Case &HD7 : code.Add(Asm.add_ovf_un)
-                Case &HD6 : code.Add(Asm.sub_ovf)
-                Case &HD7 : code.Add(Asm.sub_ovf_un)
-                Case &HD6 : code.Add(Asm.mul_ovf)
-                Case &HD7 : code.Add(Asm.mul_ovf_un)
-                'Case &HD8
-                'Case &HD9
-                'Case &HDA
-                'Case &HDB
+                Case &HD8 : code.Add(Asm.sub_ovf)
+                Case &HD9 : code.Add(Asm.sub_ovf_un)
+                Case &HDA : code.Add(Asm.mul_ovf)
+                Case &HDB : code.Add(Asm.mul_ovf_un)
                 Case &HDC : code.Add(Asm.endfinally)
                 'Case &HDD
                 'Case &HDE
@@ -292,9 +321,54 @@ Public Class ByteCode_Decoder
 #End Region
 #Region "0xE_"
                 Case &HE0 : code.Add(Asm.conv_u)
+                'Case &HE1
+                'Case &HE2
+                'Case &HE3
+                'Case &HE4
+                'Case &HE5
+                'Case &HE6
+                'Case &HE7
+                'Case &HE8
+                'Case &HE9
+                'Case &HEA
+                'Case &HEB
+                'Case &HEC
+                'Case &HED
+                'Case &HEE
+                'Case &HEF
+
 #End Region
 #Region "0xF_"
-                Case &HFE : code = Read_Prefixed(bytes, code)
+                'Case &HF1
+                'Case &HF2
+                'Case &HF3
+                'Case &HF4
+                'Case &HF5
+                'Case &HF6
+                'Case &HF7
+                'Case &HF8
+                'Case &HF9
+                'Case &HFA
+                'Case &HFB
+                'Case &HFC
+                'Case &HFD
+                'Case &HFE
+                'Case &HFF
+                'Case &HF1
+                'Case &HF2
+                'Case &HF3
+                'Case &HF4
+                'Case &HF5
+                'Case &HF6
+                'Case &HF7
+                'Case &HF8
+                'Case &HF9
+                'Case &HFA
+                'Case &HFB
+                'Case &HFC
+                'Case &HFD
+                'Case &HFE : code = Read_Prefixed(bytes, code)
+                'Case &HFF
 #End Region
                 Case Else
                     Throw New UnrecognisedByteCode(b)
