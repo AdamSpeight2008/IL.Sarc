@@ -19,7 +19,18 @@
             Public ReadOnly Property stloc_1 As New Instructions.stloc_1()
             Public ReadOnly Property stloc_2 As New Instructions.stloc_2()
             Public ReadOnly Property stloc_3 As New Instructions.stloc_3()
-
+            Public Function ldarg_s(num As Byte) As Instructions.ldarg_s
+                Return New Instructions.ldarg_s(num)
+            End Function
+            Public Function ldarg(num As UInt16) As Instructions.ldarg
+                Return New Instructions.ldarg(num)
+            End Function
+            Public Function ldarga(num As UInt16) As Instructions.ldarga
+                Return New Instructions.ldarga(num)
+            End Function
+            Public Function ldarga_s(num As Byte) As Instructions.ldarga_s
+                Return New Instructions.ldarga_s(num)
+            End Function
             Public ReadOnly Property ret As New Instructions.ret()
             Public ReadOnly Property [throw] As New Instructions.throw()
             Public ReadOnly Property rethrow As New Instructions.rethrow()
@@ -59,6 +70,19 @@
             Public ReadOnly Property ldind_i As New Instructions.ldind_i
             Public ReadOnly Property ldind_ref As New Instructions.ldind_ref
 
+
+            Public Function ldc_i4(num As Int32) As Instructions.ldc_i4
+                Return New Instructions.ldc_i4(num)
+            End Function
+            Public Function ldc_i8(num As Int64) As Instructions.ldc_i8
+                Return New Instructions.ldc_i8(num)
+            End Function
+            Public Function ldc_r4(num As Int32) As Instructions.ldc_r4
+                Return New Instructions.ldc_r4(num)
+            End Function
+            Public Function ldc_r8(num As Int64) As Instructions.ldc_r8
+                Return New Instructions.ldc_r8(num)
+            End Function
             Public ReadOnly Property ldc_i4_0 As New Instructions.ldc_i4_0
             Public ReadOnly Property ldc_i4_1 As New Instructions.ldc_i4_1
             Public ReadOnly Property ldc_i4_2 As New Instructions.ldc_i4_2
@@ -418,18 +442,18 @@
 
         End Class
         Public Class ldarg_s
-            Inherits IL_Instruction
+            Inherits Value_UInt08
 
-            Protected Friend Sub New()
-                MyBase.New(OpCode.OpCodes.ldarg_s)
+            Protected Friend Sub New(num As Byte)
+                MyBase.New(OpCode.OpCodes.ldarg_s, num)
             End Sub
 
         End Class
         Public Class ldarga_s
-            Inherits IL_Instruction
+            Inherits Value_UInt08
 
-            Protected Friend Sub New()
-                MyBase.New(OpCode.OpCodes.ldarga_s)
+            Protected Friend Sub New(num As Byte)
+                MyBase.New(OpCode.OpCodes.ldarga_s, num)
             End Sub
 
         End Class
@@ -566,27 +590,28 @@
             End Sub
         End Class
         Public Class ldc_i4
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldc_i4)
+            Inherits IL.Value_Int32
+            Public Sub New(num)
+                MyBase.New(OpCode.OpCodes.ldc_i4, num)
             End Sub
         End Class
         Public Class ldc_i8
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldc_i8)
+            Inherits Value_Int64
+            Public Sub New(num As Int64)
+                MyBase.New(OpCode.OpCodes.ldc_i8, num)
             End Sub
         End Class
+
         Public Class ldc_r4
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldc_r4)
+            Inherits Value_Float32
+            Public Sub New(num As Single)
+                MyBase.New(OpCode.OpCodes.ldc_r4, num)
             End Sub
         End Class
         Public Class ldc_r8
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldc_r8)
+            Inherits Value_Float64
+            Public Sub New(num As Double)
+                MyBase.New(OpCode.OpCodes.ldc_r8, num)
             End Sub
         End Class
         Public Class dup
@@ -610,7 +635,7 @@
                 MyBase.New(opcode)
                 Me.Addr = addr
             End Sub
-            Public Overrides Function GetBytes() As Byte()
+            Public Overrides Function GetBytes() As IEnumerable(Of Byte)
                 Return MyBase.GetBytes().Concat(BitConverter.GetBytes(Addr))
             End Function
 
@@ -623,7 +648,7 @@
                 MyBase.New(opcode)
                 Me.Token = Token
             End Sub
-            Public Overrides Function GetBytes() As Byte()
+            Public Overrides Function GetBytes() As IEnumerable(Of Byte)
                 Return MyBase.GetBytes().Concat(Me.Token.GetBytes())
             End Function
 
@@ -1703,15 +1728,15 @@
             End Sub
         End Class
         Public Class ldarg
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldarg)
+            Inherits IL.Value_UInt16
+            Public Sub New(num As UInt16)
+                MyBase.New(OpCode.OpCodes.ldarg, num)
             End Sub
         End Class
         Public Class ldarga
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldarga)
+            Inherits IL.Value_UInt16
+            Public Sub New(num As UInt16)
+                MyBase.New(OpCode.OpCodes.ldarga, num)
             End Sub
         End Class
         Public Class starg
@@ -1848,7 +1873,7 @@
                 Labels.Capacity = n
                 Labels.AddRange(cases)
             End Sub
-            Public Overrides Function GetBytes() As Byte()
+            Public Overrides Function GetBytes() As IEnumerable(Of Byte)
                 Dim b = Labels.SelectMany(Function(s As Int32) BitConverter.GetBytes(s))
                 Dim n = BitConverter.GetBytes(CUInt(Labels.Count))
 

@@ -92,8 +92,8 @@ Public Class ByteCode_Decoder
                 Case &H0B : code.Add(Asm.stloc_1)
                 Case &H0C : code.Add(Asm.stloc_2)
                 Case &H0D : code.Add(Asm.stloc_3)
-                'Case &H0E : code.Add(Asm.ldarg_s)
-                'Case &H0F : code.Add(Asm.ldarga_s)
+                Case &H0E : code.Add(Asm.ldarg_s(bytes.ReadByte))
+                Case &H0F : code.Add(Asm.ldarga_s(bytes.ReadByte))
 #End Region
 #Region "0x1_"
                 'Case &H10 : code.Add(Asm.starg_s)
@@ -114,10 +114,10 @@ Public Class ByteCode_Decoder
                 'Case &H1F : code.Add(Asm.ldc_i4_s)
 #End Region
 #Region "0x2_"
-                'Case &H20 : code.Add(Asm.ldc_i4)
-                'Case &H21 : code.Add(Asm.ldc_i8)
-                'Case &H22 : code.Add(Asm.ldc_r4)
-                'Case &H23 : code.Add(Asm.ldc_r8)
+                Case &H20 : code.Add(Asm.ldc_i4(bytes.Read_4Bytes))
+                Case &H21 : code.Add(Asm.ldc_i8(bytes.Read_8Bytes))
+                Case &H22 : code.Add(Asm.ldc_r4(bytes.Read_4Bytes))
+                Case &H23 : code.Add(Asm.ldc_r8(bytes.Read_8Bytes))
                 'Case &H24
                 Case &H25 : code.Add(Asm.dup)
                 Case &H26 : code.Add(Asm.pop)
@@ -475,9 +475,9 @@ Public Class ByteCode_Decoder
             Case &H05 : code.Add(Asm.clt_un)
             '    Case &H06 : code.Add(Asm.ldftn)
             '    Case &H07 : code.Add(Asm.ldvirtftn)
-            'Case &H08 : code.Add(Asm.ldarg)
-            '    Case &H09 : code.Add(Asm.ldarg)
-            '    Case &H0A : code.Add(Asm.ldarga)
+            ' Case &H08 : code.Add(Asm.ldarg)
+            Case &H09 : code.Add(Asm.ldarg(bytes.Read_2Bytes()))
+            Case &H0A : code.Add(Asm.ldarga(bytes.Read_2Bytes()))
             '    Case &H0B : code.Add(Asm.starg)
             '    Case &H0C : code.Add(Asm.ldloc)
             '    Case &H0D : code.Add(Asm.ldloca)
