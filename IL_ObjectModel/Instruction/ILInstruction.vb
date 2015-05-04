@@ -182,7 +182,7 @@
 
     Public MustInherit Class Value_Float64
         Inherits Value(Of Double)
-        Public Sub New(opcode As OpCode, Value As Double)
+        Public Sub New(opcode As OpCode, Value As Int64)
             MyBase.New(opcode, Value)
         End Sub
         Public Overrides Function GetBytes() As IEnumerable(Of Byte)

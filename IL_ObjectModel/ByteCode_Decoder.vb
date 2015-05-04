@@ -43,15 +43,15 @@ Public Class ByteSource
         Public Function EoB() As Integer
             Return _x >= _bs.Length
         End Function
-        Public Function ReadByte() As Byte
+        Public Function Read_1Byte() As Byte
             Dim output = _bs._bytes(x)
             x += 1
             Return output
         End Function
 
         Public Function Read_2Bytes() As Int16
-            Dim b0 = ReadByte()
-            Dim b1 = ReadByte()
+            Dim b0 = Read_1Byte()
+            Dim b1 = Read_1Byte()
             Return (b0 << 8) + b1
         End Function
 
@@ -75,7 +75,7 @@ Public Class ByteCode_Decoder
         Dim code As New IL.ILCode
 
         While Not (bytes.EoB)
-            Dim b As Byte = bytes.ReadByte
+            Dim b As Byte = bytes.Read_1Byte
             Select Case b
 #Region "0x0_"
                 Case &H00 : code.Add(Asm.nop)
@@ -92,14 +92,14 @@ Public Class ByteCode_Decoder
                 Case &H0B : code.Add(Asm.stloc_1)
                 Case &H0C : code.Add(Asm.stloc_2)
                 Case &H0D : code.Add(Asm.stloc_3)
-                Case &H0E : code.Add(Asm.ldarg_s(bytes.ReadByte))
-                Case &H0F : code.Add(Asm.ldarga_s(bytes.ReadByte))
+                Case &H0E : code.Add(Asm.ldarg_s(bytes.Read_1Byte))
+                Case &H0F : code.Add(Asm.ldarga_s(bytes.Read_1Byte))
 #End Region
 #Region "0x1_"
-                'Case &H10 : code.Add(Asm.starg_s)
-                'Case &H11 : code.Add(Asm.ldloc_s)
-                'Case &H12 : code.Add(Asm.ldloca_s)
-                'Case &H13 : code.Add(Asm.stloc_s)
+                Case &H10 : code.Add(Asm.starg_s(bytes.Read_1Byte))
+                Case &H11 : code.Add(Asm.ldloc_s(bytes.Read_1Byte))
+                Case &H12 : code.Add(Asm.ldloca_s(bytes.Read_1Byte))
+                Case &H13 : code.Add(Asm.stloc_s(bytes.Read_1Byte))
                 Case &H14 : code.Add(Asm.ldnull)
                 Case &H15 : code.Add(Asm.ldc_i4_m1)
                 Case &H16 : code.Add(Asm.ldc_i4_0)
@@ -111,9 +111,9 @@ Public Class ByteCode_Decoder
                 Case &H1C : code.Add(Asm.ldc_i4_6)
                 Case &H1D : code.Add(Asm.ldc_i4_7)
                 Case &H1E : code.Add(Asm.ldc_i4_8)
-                'Case &H1F : code.Add(Asm.ldc_i4_s)
+                Case &H1F : code.Add(Asm.ldc_i4_s(bytes.Read_1Byte))
 #End Region
-#Region "0x2_"
+#Region "0x2_ (except for 0x24)"
                 Case &H20 : code.Add(Asm.ldc_i4(bytes.Read_4Bytes))
                 Case &H21 : code.Add(Asm.ldc_i8(bytes.Read_8Bytes))
                 Case &H22 : code.Add(Asm.ldc_r4(bytes.Read_4Bytes))
@@ -187,27 +187,21 @@ Public Class ByteCode_Decoder
                 Case &H6E : code.Add(Asm.conv_u8)
                 Case &H6F : ReadCall(b, bytes, code)
 #End Region
-#Region "0x7_"
-                'Case &H70
-                'Case &H71
-                'Case &H72
-                'Case &H73
-                'Case &H74
-                'Case &H75
+#Region "0x7_ (except: 0x70..0x73, 0x77..0x79, 0x7B..0x7F)"
+                Case &H70, &H71, &H72, &H73, &H74, &H75
+                    Read_MetaDataToken(b, bytes, code)
+
                 Case &H76 : code.Add(Asm.conv_r_un)
                 'Case &H77
                 'Case &H78
-                'Case &H79
+                Case &H79 : Read_MetaDataToken(b, bytes, code) ' unbox
                 Case &H7A : code.Add(Asm.throw)
-                'Case &H7B
-                'Case &H7C
-                'Case &H7D
-                'Case &H7E
-                'Case &H7F
+                Case &H7B, &H7C, &H7D, &H7E, &H7F
+                    Read_MetaDataToken(b, bytes, code)
 #End Region
 #Region "0x8_"
                 'Case &H80 'stsfld
-                'Case &H81 'stobj
+                Case &H81 : Read_MetaDataToken(b, bytes, code) 'stobj
                 Case &H82 : code.Add(Asm.conv_ovf_i1_un)
                 Case &H83 : code.Add(Asm.conv_ovf_i2_un)
                 Case &H84 : code.Add(Asm.conv_ovf_i4_un)
@@ -219,9 +213,9 @@ Public Class ByteCode_Decoder
                 Case &H8A : code.Add(Asm.conv_ovf_i_un)
                 Case &H8B : code.Add(Asm.conv_ovf_u_un)
                 'Case &H8C 'box
-                'Case &H8D 'newarr
+                Case &H8D : Read_MetaDataToken(b,bytes,code) 'newarr
                 Case &H8E : code.Add(Asm.ldlen)
-                'Case &H8F 'ldelema
+                Case &H8F : Read_MetaDataToken(b, bytes, code) 'ldelema
 
 #End Region
 #Region "0x9_"
@@ -248,9 +242,9 @@ Public Class ByteCode_Decoder
                 'Case &HA0 'stelem.r4
                 'Case &HA1 'stelem.r8
                 'Case &HA2 'stelem.ref
-                'Case &HA3 'ldelem
-                'Case &HA4 'stelem
-                'Case &HA5 'unbox.any
+                Case &HA3 : Read_MetaDataToken(b, bytes, code) 'ldelem
+                Case &HA4 : Read_MetaDataToken(b, bytes, code) 'stelem
+                Case &HA5 : Read_MetaDataToken(b, bytes, code) 'unbox.any
                 'Case &HA6
                 'Case &HA7
                 'Case &HA8
@@ -283,11 +277,11 @@ Public Class ByteCode_Decoder
 #Region "0xC_"
                 'Case &HC0
                 'Case &HC1
-                'Case &HC2
+                Case &HC2 : Read_MetaDataToken(b, bytes, code)
                 Case &HC3 : code.Add(Asm.ckfinite)
                 'Case &HC4
                 'Case &HC5
-                'Case &HC6
+                Case &HC6 : Read_MetaDataToken(b, bytes, code)
                 'Case &HC7
                 'Case &HC8
                 'Case &HC9
@@ -302,7 +296,7 @@ Public Class ByteCode_Decoder
                 'Case &HCF
 #End Region
 #Region "0xD_"
-                'Case &HD0_
+                Case &HD0 : Read_MetaDataToken(b, bytes, code) 'ldtoken
                 Case &HD1 : code.Add(Asm.conv_u2)
                 Case &HD2 : code.Add(Asm.conv_u1)
                 Case &HD3 : code.Add(Asm.conv_i)
@@ -315,8 +309,8 @@ Public Class ByteCode_Decoder
                 Case &HDA : code.Add(Asm.mul_ovf)
                 Case &HDB : code.Add(Asm.mul_ovf_un)
                 Case &HDC : code.Add(Asm.endfinally)
-                'Case &HDD
-                'Case &HDE
+                Case &HDD : code.Add(Asm.leave(bytes.Read_4Bytes))
+                Case &HDE : code.Add(Asm.leave_s(bytes.Read_1Byte))
                 Case &HDF : code.Add(Asm.stind_i)
 #End Region
 #Region "0xE_"
@@ -398,44 +392,44 @@ Public Class ByteCode_Decoder
     Private Function ReadBranch(b As Byte, bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
         Select Case b
             ' Short Branch
-            Case &H2B : code.Add(Asm.br_s(bytes.ReadByte))
+            Case &H2B : code.Add(Asm.br_s(bytes.Read_1Byte))
 
-            Case &H2C : code.Add(Asm.brfalse_s(bytes.ReadByte))
-            Case &H2C : code.Add(Asm.brnull_s(bytes.ReadByte))
-            Case &H2C : code.Add(Asm.brzero_s(bytes.ReadByte))
+            Case &H2C : code.Add(Asm.brfalse_s(bytes.Read_1Byte))
+            Case &H2C : code.Add(Asm.brnull_s(bytes.Read_1Byte))
+            Case &H2C : code.Add(Asm.brzero_s(bytes.Read_1Byte))
 
-            Case &H2D : code.Add(Asm.brtrue_s(bytes.ReadByte))
-            Case &H2D : code.Add(Asm.brinst_s(bytes.ReadByte))
+            Case &H2D : code.Add(Asm.brtrue_s(bytes.Read_1Byte))
+            Case &H2D : code.Add(Asm.brinst_s(bytes.Read_1Byte))
 
-            Case &H2E : code.Add(Asm.beq_s(bytes.ReadByte))
-            Case &H2F : code.Add(Asm.bge_s(bytes.ReadByte))
-            Case &H30 : code.Add(Asm.bgt_s(bytes.ReadByte))
-            Case &H31 : code.Add(Asm.ble_s(bytes.ReadByte))
-            Case &H32 : code.Add(Asm.blt_s(bytes.ReadByte))
-            Case &H33 : code.Add(Asm.bne_un_s(bytes.ReadByte))
-            Case &H34 : code.Add(Asm.bge_un_s(bytes.ReadByte))
-            Case &H35 : code.Add(Asm.bgt_un_s(bytes.ReadByte))
-            Case &H36 : code.Add(Asm.ble_un_s(bytes.ReadByte))
-            Case &H37 : code.Add(Asm.blt_un_s(bytes.ReadByte))
+            Case &H2E : code.Add(Asm.beq_s(bytes.Read_1Byte))
+            Case &H2F : code.Add(Asm.bge_s(bytes.Read_1Byte))
+            Case &H30 : code.Add(Asm.bgt_s(bytes.Read_1Byte))
+            Case &H31 : code.Add(Asm.ble_s(bytes.Read_1Byte))
+            Case &H32 : code.Add(Asm.blt_s(bytes.Read_1Byte))
+            Case &H33 : code.Add(Asm.bne_un_s(bytes.Read_1Byte))
+            Case &H34 : code.Add(Asm.bge_un_s(bytes.Read_1Byte))
+            Case &H35 : code.Add(Asm.bgt_un_s(bytes.Read_1Byte))
+            Case &H36 : code.Add(Asm.ble_un_s(bytes.Read_1Byte))
+            Case &H37 : code.Add(Asm.blt_un_s(bytes.Read_1Byte))
 
 
-            Case &H38 : code.Add(Asm.br(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H39 : code.Add(Asm.brfalse(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H39 : code.Add(Asm.brnull(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H39 : code.Add(Asm.brzero(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
+            Case &H38 : code.Add(Asm.br(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H39 : code.Add(Asm.brfalse(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H39 : code.Add(Asm.brnull(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H39 : code.Add(Asm.brzero(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
 
-            Case &H3A : code.Add(Asm.brtrue(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H3A : code.Add(Asm.brinst(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H3B : code.Add(Asm.beq(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H3C : code.Add(Asm.bge(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H3D : code.Add(Asm.bgt(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H3E : code.Add(Asm.ble(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H3F : code.Add(Asm.blt(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H40 : code.Add(Asm.bne_un(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H41 : code.Add(Asm.bge_un(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H42 : code.Add(Asm.bgt_un(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H43 : code.Add(Asm.ble_un(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
-            Case &H44 : code.Add(Asm.blt_un(bytes.ReadByte, bytes.ReadByte, bytes.ReadByte, bytes.ReadByte))
+            Case &H3A : code.Add(Asm.brtrue(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H3A : code.Add(Asm.brinst(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H3B : code.Add(Asm.beq(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H3C : code.Add(Asm.bge(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H3D : code.Add(Asm.bgt(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H3E : code.Add(Asm.ble(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H3F : code.Add(Asm.blt(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H40 : code.Add(Asm.bne_un(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H41 : code.Add(Asm.bge_un(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H42 : code.Add(Asm.bgt_un(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H43 : code.Add(Asm.ble_un(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
+            Case &H44 : code.Add(Asm.blt_un(bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte, bytes.Read_1Byte))
 
             Case Else
                 Throw New UnrecognisedByteCode(b)
@@ -445,9 +439,32 @@ Public Class ByteCode_Decoder
 
     Private Function Read_MetaDataToken(b As Byte, bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
         Select Case b
-            Case &H27
-                Dim b4 = bytes.Read_4Bytes
-                code.Add(Asm.jmp(b4))
+            Case &H27 : code.Add(Asm.jmp(bytes.Read_4Bytes))
+            Case &H70 : code.Add(Asm.cpobj(bytes.Read_4Bytes))
+            Case &H71 : code.Add(Asm.ldobj(bytes.Read_4Bytes))
+            Case &H72 : code.Add(Asm.ldstr(bytes.Read_4Bytes))
+            Case &H73 : code.Add(Asm.newobj(bytes.Read_4Bytes))
+            Case &H74 : code.Add(Asm.castclass(bytes.Read_4Bytes))
+            Case &H75 : code.Add(Asm.initclass(bytes.Read_4Bytes))
+            Case &H79 : code.Add(Asm.unbox(bytes.Read_4Bytes))
+            Case &H7B : code.Add(Asm.ldfld(bytes.Read_4Bytes))
+            Case &H7C : code.Add(Asm.ldflda(bytes.Read_4Bytes))
+            Case &H7D : code.Add(Asm.stfld(bytes.Read_4Bytes))
+            Case &H7E : code.Add(Asm.ldsfld(bytes.Read_4Bytes))
+            Case &H7F : code.Add(Asm.ldsflda(bytes.Read_4Bytes))
+            Case &H80 : code.Add(Asm.stsfld(bytes.Read_4Bytes))
+            Case &H81 : code.Add(Asm.stobj(bytes.Read_4Bytes))
+
+            Case &H8D : code.Add(Asm.newarr(bytes.Read_4Bytes))
+
+            Case &H8F : code.Add(Asm.ldelema(bytes.Read_4Bytes))
+            Case &HA3 : code.Add(Asm.ldarg(bytes.Read_4Bytes))
+            Case &HA4 : code.Add(Asm.stelem(bytes.Read_4Bytes))
+            Case &HA5 : code.Add(Asm.unbox_any(bytes.Read_4Bytes))
+            Case &HC2 : code.Add(Asm.refanyval(bytes.Read_4Bytes))
+            Case &HC6 : code.Add(Asm.mkrefany(bytes.Read_4Bytes))
+            Case &HD0 : code.Add(Asm.ldtoken(bytes.Read_4Bytes))
+
             Case Else
         End Select
         Return code
@@ -465,7 +482,7 @@ Public Class ByteCode_Decoder
     End Function
 
     Private Function Read_Prefixed(bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
-        Dim b As Byte = bytes.ReadByte
+        Dim b As Byte = bytes.Read_1Byte
         Select Case b
             Case &H00 : code.Add(Asm.ArgList)
             Case &H01 : code.Add(Asm.ceq)
@@ -474,28 +491,28 @@ Public Class ByteCode_Decoder
             Case &H04 : code.Add(Asm.clt)
             Case &H05 : code.Add(Asm.clt_un)
             '    Case &H06 : code.Add(Asm.ldftn)
-            '    Case &H07 : code.Add(Asm.ldvirtftn)
+            Case &H07 : code.Add(Asm.ldvirtftn(bytes.Read_4Bytes))
             ' Case &H08 : code.Add(Asm.ldarg)
-            Case &H09 : code.Add(Asm.ldarg(bytes.Read_2Bytes()))
-            Case &H0A : code.Add(Asm.ldarga(bytes.Read_2Bytes()))
-            '    Case &H0B : code.Add(Asm.starg)
-            '    Case &H0C : code.Add(Asm.ldloc)
-            '    Case &H0D : code.Add(Asm.ldloca)
-            '    Case &H0E : code.Add(Asm.stloc)
+            Case &H09 : code.Add(Asm.ldarg(bytes.Read_2Bytes))
+            Case &H0A : code.Add(Asm.ldarga(bytes.Read_2Bytes))
+            Case &H0B : code.Add(Asm.starg(bytes.Read_2Bytes))
+            Case &H0C : code.Add(Asm.ldloc(bytes.Read_2Bytes))
+            Case &H0D : code.Add(Asm.ldloca(bytes.Read_2Bytes))
+            Case &H0E : code.Add(Asm.stloc(bytes.Read_2Bytes))
             Case &H0F : code.Add(Asm.localloc)
             'Case &H10
             Case &H11 : code.Add(Asm.EndFilter)
             '    Case &H12 : code.Add(Asm.unalligned)
             Case &H13 : code.Add(Asm.volatile_)
             Case &H14 : code.Add(Asm.tail_)
-            '    Case &H15 : code.Add(Asm.initobj)
+            Case &H15 : code.Add(Asm.initobj(bytes.Read_4Bytes))
             '    Case &H16 : code.Add(Asm.constrained)
             Case &H17 : code.Add(Asm.cpblk)
             Case &H18 : code.Add(Asm.initblk)
             '    Case &H19 : code.Add(Asm.no_)
             Case &H1A : code.Add(Asm.rethrow)
-            '    Case &H1C : code.Add(Asm.sizeof)
-            '    Case &H1D : code.Add(Asm.refanytype)
+            Case &H1C : code.Add(Asm.sizeof(bytes.Read_4Bytes))
+            Case &H1D : code.Add(Asm.Refanytype)
             '    Case &H1E : code.Add(Asm.readonly)
             Case Else
                 Throw New UnrecognisedByteCode(b)

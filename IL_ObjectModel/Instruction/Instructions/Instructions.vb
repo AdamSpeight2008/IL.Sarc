@@ -69,8 +69,18 @@
             Public ReadOnly Property ldind_r8 As New Instructions.ldind_r8
             Public ReadOnly Property ldind_i As New Instructions.ldind_i
             Public ReadOnly Property ldind_ref As New Instructions.ldind_ref
-
-
+            Public Function leave(num As Int32) As Instructions.leave
+                Return New Instructions.leave(num)
+            End Function
+            Public Function leave_s(num As SByte) As Instructions.leave_s
+                Return New Instructions.leave_s(num)
+            End Function
+            Public Function starg_s(num As SByte) As Instructions.starg_s
+                Return New Instructions.starg_s(num)
+            End Function
+            Public Function starg(num As UInt16) As Instructions.starg
+                Return New Instructions.starg(num)
+            End Function
             Public Function ldc_i4(num As Int32) As Instructions.ldc_i4
                 Return New Instructions.ldc_i4(num)
             End Function
@@ -82,6 +92,29 @@
             End Function
             Public Function ldc_r8(num As Int64) As Instructions.ldc_r8
                 Return New Instructions.ldc_r8(num)
+            End Function
+            Public Function ldc_i4_s(num As Byte) As Instructions.ldc_i4_s
+                Return New Instructions.ldc_i4_s(num)
+            End Function
+            Public Function ldloc_s(num As Byte) As Instructions.ldloc_s
+                Return New Instructions.ldloc_s(num)
+            End Function
+            Public Function ldloc(num As UInt16) As Instructions.ldloc
+                Return New Instructions.ldloc(num)
+            End Function
+
+            Public Function stloc_s(num As Byte) As Instructions.stloc_s
+                Return New Instructions.stloc_s(num)
+            End Function
+            Public Function stloc(num As UInt16) As Instructions.stloc
+                Return New Instructions.stloc(num)
+            End Function
+
+            Public Function ldloca_s(num As Byte) As Instructions.ldloca_s
+                Return New Instructions.ldloca_s(num)
+            End Function
+            Public Function ldloca(num As UInt16) As Instructions.ldloca
+                Return New Instructions.ldloca(num)
             End Function
             Public ReadOnly Property ldc_i4_0 As New Instructions.ldc_i4_0
             Public ReadOnly Property ldc_i4_1 As New Instructions.ldc_i4_1
@@ -166,10 +199,88 @@
             Public Function switch(n As UInt32, cases As List(Of Int32)) As Instructions.switch
                 Return New IL.Instructions.switch(n, cases)
             End Function
-
+            Public Function unbox(valuetype As UInt32) As Instructions.unbox
+                Return New Instructions.unbox(New MetadataToken(valuetype))
+            End Function
+            Public Function unbox_any(typeTok As UInt32) As Instructions.unbox_any
+                Return New Instructions.unbox_any(New MetadataToken(typeTok))
+            End Function
+            Public Function refanyval([type] As UInt32) As Instructions.refanyval
+                Return New Instructions.refanyval(New MetadataToken([type]))
+            End Function
+            Public Function ldvirtftn(method As UInt32) As Instructions.ldvirtftn
+                Return New Instructions.ldvirtftn(New MetadataToken(method))
+            End Function
+            Public Function stelem(typeTok As UInt32) As Instructions.stelem
+                Return New Instructions.stelem(New MetadataToken(typeTok))
+            End Function
+            Public Function stfld(field As UInt32) As Instructions.stfld
+                Return New Instructions.stfld(New MetadataToken(field))
+            End Function
+            Public Function mkrefany([class] As UInt32) As Instructions.mkrefany
+                Return New Instructions.mkrefany(New MetadataToken([class]))
+            End Function
+            Public Function ldelem(typeTok As UInt32) As Instructions.ldelem
+                Return New Instructions.ldelem(New MetadataToken(typeTok))
+            End Function
+            Public Function ldelema([class] As UInt32) As Instructions.ldelema
+                Return New Instructions.ldelema(New MetadataToken([class]))
+            End Function
+            Public Function ldfld(field As UInt32) As Instructions.ldfld
+                Return New Instructions.ldfld(New MetadataToken(field))
+            End Function
+            Public Function ldflda(field As UInt32) As Instructions.ldflda
+                Return New Instructions.ldflda(New MetadataToken(field))
+            End Function
+            Public Function ldsfld(field As UInt32) As Instructions.ldsfld
+                Return New Instructions.ldsfld(New MetadataToken(field))
+            End Function
+            Public Function ldsflda(field As UInt32) As Instructions.ldsflda
+                Return New Instructions.ldsflda(New MetadataToken(field))
+            End Function
+            Public Function ldobj(typeTok As UInt32) As Instructions.ldobj
+                Return New Instructions.ldobj(New MetadataToken(typeTok))
+            End Function
+            Public Function sizeof(typeTok As UInt32) As Instructions.sizeof
+                Return New Instructions.sizeof(New MetadataToken(typeTok))
+            End Function
+            Public Function ldstr([string] As UInt32) As Instructions.ldstr
+                Return New Instructions.ldstr(New MetadataToken([string]))
+            End Function
+            Public Function ldtoken(token As UInt32) As Instructions.ldtoken
+                Return New Instructions.ldtoken(New MetadataToken(token))
+            End Function
             Public Function jmp(b4 As UInt32) As Instructions.jmp
                 Return New Instructions.jmp(New MetadataToken(b4))
             End Function
+            Public Function castclass([class] As UInt32) As Instructions.castclass
+                Return New Instructions.castclass(New MetadataToken([class]))
+            End Function
+            Public Function cpobj(typeTok As UInt32) As Instructions.cpobj
+                Return New Instructions.cpobj(New MetadataToken(typeTok))
+            End Function
+            Public Function initobj(typeTok As UInt32) As Instructions.initobj
+                Return New Instructions.initobj(New MetadataToken(typeTok))
+            End Function
+            Public Function stsfld(field As UInt32) As Instructions.stsfld
+                Return New Instructions.stsfld(New MetadataToken(field))
+            End Function
+            Public Function stobj(typeTok As UInt32) As Instructions.stobj
+                Return New Instructions.stobj(New MetadataToken(typeTok))
+            End Function
+            Public Function initclass([class] As UInt32) As Instructions.initclass
+                Return New Instructions.initclass(New MetadataToken([class]))
+            End Function
+            Public Function newarr(eType As UInt32) As Instructions.newarr
+                Return New Instructions.newarr(New MetadataToken(eType))
+            End Function
+            Public Function newobj(ctor As UInt32) As Instructions.newobj
+                Return New Instructions.newobj(New MetadataToken(ctor))
+            End Function
+            Public Function Refanytype() As Instructions.Refanytype
+                Return New Instructions.Refanytype()
+            End Function
+
 
 #Region "Branches"
 #Region "Short"
@@ -459,35 +570,28 @@
         End Class
 
         Public Class starg_s
-            Inherits IL_Instruction
+            Inherits Value_UInt08
 
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.starg_s)
+            Public Sub New(num As Byte)
+                MyBase.New(OpCode.OpCodes.starg_s, num)
             End Sub
 
         End Class
 
-        Public Class ldloc_s
-            Inherits IL_Instruction
 
-            Protected Friend Sub New()
-                MyBase.New(OpCode.OpCodes.ldloc_s)
-            End Sub
-
-        End Class
         Public Class ldloca_s
-            Inherits IL_Instruction
+            Inherits Value_UInt08
 
-            Protected Friend Sub New()
-                MyBase.New(OpCode.OpCodes.ldloca_s)
+            Protected Friend Sub New(indx As Byte)
+                MyBase.New(OpCode.OpCodes.ldloca_s, indx)
             End Sub
 
         End Class
         Public Class stloc_s
-            Inherits IL_Instruction
+            Inherits Value_UInt08
 
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.stloc_s)
+            Public Sub New(indx As Byte)
+                MyBase.New(OpCode.OpCodes.stloc_s, indx)
             End Sub
 
         End Class
@@ -641,7 +745,7 @@
 
         End Class
 
-        Public MustInherit Class IL_MetedataToken
+        Public MustInherit Class IL_MetadataToken
             Inherits IL_Instruction
             Public ReadOnly Property Token As MetadataToken
             Public Sub New(opcode As OpCode, Token As MetadataToken)
@@ -655,7 +759,7 @@
         End Class
 
         Public Class jmp
-            Inherits IL_MetedataToken
+            Inherits IL_MetadataToken
 
             Public Sub New(Token As MetadataToken)
                 MyBase.New(OpCode.OpCodes.jmp, Token)
@@ -1240,24 +1344,20 @@
                 MyBase.New(OpCode.OpCodes.callvirt, addr)
             End Sub
         End Class
-        Public Class cpobj
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.cpobj)
-            End Sub
-        End Class
+
         Public Class ldobj
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldobj)
+            Inherits IL_MetadataToken
+            Public Sub New(typeTok As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldobj, typeTok)
             End Sub
         End Class
-        Public Class lrstr
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.lrstr)
+        Public Class ldsfield
+            Inherits IL_MetadataToken
+            Public Sub New(field As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldobj, field)
             End Sub
         End Class
+
         Public Class newpobj
             Inherits IL_Instruction
             Public Sub New()
@@ -1265,9 +1365,34 @@
             End Sub
         End Class
         Public Class castclass
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.castclass)
+            Inherits IL_MetadataToken
+            Public Sub New(Token As MetadataToken)
+                MyBase.New(OpCode.OpCodes.castclass, Token)
+            End Sub
+        End Class
+
+        Public Class mkrefany
+            Inherits IL_MetadataToken
+            Public Sub New([class] As MetadataToken)
+                MyBase.New(OpCode.OpCodes.cpobj, [class])
+            End Sub
+        End Class
+        Public Class newobj
+            Inherits IL_MetadataToken
+            Public Sub New(ctor As MetadataToken)
+                MyBase.New(OpCode.OpCodes.newobj, ctor)
+            End Sub
+        End Class
+        Public Class newarr
+            Inherits IL_MetadataToken
+            Public Sub New(etype As MetadataToken)
+                MyBase.New(OpCode.OpCodes.newarr, etype)
+            End Sub
+        End Class
+        Public Class cpobj
+            Inherits IL_MetadataToken
+            Public Sub New(Token As MetadataToken)
+                MyBase.New(OpCode.OpCodes.cpobj, Token)
             End Sub
         End Class
         Public Class isinst
@@ -1282,55 +1407,62 @@
                 MyBase.New(OpCode.OpCodes.conv_r_un)
             End Sub
         End Class
-        Public Class unbox
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.unbox)
-            End Sub
-        End Class
+
         Public Class ldfld
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldfld)
+            Inherits IL_MetadataToken
+            Public Sub New(field As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldfld, field)
             End Sub
         End Class
         Public Class ldflda
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldflda)
+            Inherits IL_MetadataToken
+            Public Sub New(field As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldflda, field)
             End Sub
         End Class
         Public Class stfld
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.stfld)
-            End Sub
-        End Class
-        Public Class ldsfld
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldsfld)
-            End Sub
-        End Class
-        Public Class ldsflda
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldsflda)
-            End Sub
-        End Class
-        Public Class stsfld
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.stsfld)
+            Inherits IL_MetadataToken
+            Public Sub New(field As MetadataToken)
+                MyBase.New(OpCode.OpCodes.stfld, field)
             End Sub
         End Class
         Public Class stobj
-            Inherits IL_Instruction
-
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.stobj)
+            Inherits IL_MetadataToken
+            Public Sub New(field As MetadataToken)
+                MyBase.New(OpCode.OpCodes.stobj, field)
             End Sub
         End Class
+        Public Class ldsfld
+            Inherits IL_MetadataToken
+            Public Sub New(field As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldsfld, field)
+            End Sub
+        End Class
+        Public Class ldsflda
+            Inherits IL_MetadataToken
+            Public Sub New(field As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldsflda, field)
+            End Sub
+        End Class
+        Public Class ldstr
+            Inherits IL_MetadataToken
+            Public Sub New([string] As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldstr, [string])
+            End Sub
+        End Class
+        Public Class stsfld
+            Inherits IL_MetadataToken
+            Public Sub New(field As MetadataToken)
+                MyBase.New(OpCode.OpCodes.stsfld, field)
+            End Sub
+        End Class
+        Public Class unbox
+            Inherits IL_MetadataToken
+            Public Sub New(valuetype As MetadataToken)
+                MyBase.New(OpCode.OpCodes.stsfld, valuetype)
+            End Sub
+        End Class
+
         Public Class conv_ovf_i1_un
             Inherits IL_Instruction
             Public Sub New()
@@ -1397,24 +1529,14 @@
                 MyBase.New(OpCode.OpCodes.box)
             End Sub
         End Class
-        Public Class newarr
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.newarr)
-            End Sub
-        End Class
+
         Public Class ldlen
             Inherits IL_Instruction
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ldlen)
             End Sub
         End Class
-        Public Class ldelema
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldelema)
-            End Sub
-        End Class
+
         Public Class ldelem_i1
             Inherits IL_Instruction
             Public Sub New()
@@ -1529,22 +1651,38 @@
                 MyBase.New(OpCode.OpCodes.stelem_r8)
             End Sub
         End Class
-        Public Class stelem
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.stelem)
-            End Sub
-        End Class
+
         Public Class ldelem
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldelem)
+            Inherits IL_MetadataToken
+            Public Sub New(typeTok As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldelem, typeTok)
             End Sub
         End Class
+        Public Class ldelema
+            Inherits IL_MetadataToken
+            Public Sub New(typeTok As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldelema, typeTok)
+            End Sub
+        End Class
+
+        Public Class ldtoken
+            Inherits IL_MetadataToken
+            Public Sub New(token As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldtoken, token)
+            End Sub
+        End Class
+
+        Public Class ldvirtftn
+            Inherits IL_MetadataToken
+            Public Sub New(method As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldvirtftn, method)
+            End Sub
+        End Class
+
         Public Class unbox_any
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.unbox_any)
+            Inherits IL_MetadataToken
+            Public Sub New(typeTok As MetadataToken)
+                MyBase.New(OpCode.OpCodes.ldvirtftn, typeTok)
             End Sub
         End Class
         Public Class conv_ovf_i1
@@ -1595,22 +1733,18 @@
                 MyBase.New(OpCode.OpCodes.conv_ovf_u8)
             End Sub
         End Class
-        Public Class refanyval
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.refanyval)
-            End Sub
-        End Class
+
         Public Class ckfinite
             Inherits IL_Instruction
             Public Sub New()
                 MyBase.New(OpCode.OpCodes.ckfinite)
             End Sub
         End Class
-        Public Class cldtoken
+
+        Public Class Refanytype
             Inherits IL_Instruction
             Public Sub New()
-                MyBase.New(OpCode.OpCodes.cldtoken)
+                MyBase.New(OpCode.OpCodes.refanytype_)
             End Sub
         End Class
         Public Class conv_u2
@@ -1721,10 +1855,24 @@
                 MyBase.New(OpCode.OpCodes.ldftn)
             End Sub
         End Class
-        Public Class ldvirtftn
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldvirtftn)
+
+
+        Public Class ldc_i4_s
+            Inherits IL.Value_UInt08
+            Public Sub New(num As Byte)
+                MyBase.New(OpCode.OpCodes.ldarg, num)
+            End Sub
+        End Class
+        Public Class ldloc
+            Inherits IL.Value_UInt16
+            Public Sub New(num As UInt16)
+                MyBase.New(OpCode.OpCodes.ldloc, num)
+            End Sub
+        End Class
+        Public Class ldloc_s
+            Inherits IL.Value_UInt08
+            Public Sub New(num As Byte)
+                MyBase.New(OpCode.OpCodes.ldloc_s, num)
             End Sub
         End Class
         Public Class ldarg
@@ -1739,28 +1887,35 @@
                 MyBase.New(OpCode.OpCodes.ldarga, num)
             End Sub
         End Class
+        Public Class leave
+            Inherits IL.Value_Int32
+            Public Sub New(num As Int32)
+                MyBase.New(OpCode.OpCodes.leave, num)
+            End Sub
+        End Class
+        Public Class leave_s
+            Inherits IL.Value_Int08
+            Public Sub New(num As SByte)
+                MyBase.New(OpCode.OpCodes.leave_s, num)
+            End Sub
+        End Class
         Public Class starg
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.starg)
+            Inherits Value_UInt16
+            Public Sub New(num As UInt16)
+                MyBase.New(OpCode.OpCodes.starg, num)
             End Sub
         End Class
-        Public Class ldloc
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldloc)
-            End Sub
-        End Class
+
         Public Class ldloca
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.ldloca)
+            Inherits Value_UInt16
+            Public Sub New(indx As UInt16)
+                MyBase.New(OpCode.OpCodes.ldloca, indx)
             End Sub
         End Class
         Public Class stloc
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.stloc)
+            Inherits Value_UInt16
+            Public Sub New(indx As UInt16)
+                MyBase.New(OpCode.OpCodes.stloc, indx)
             End Sub
         End Class
         Public Class localloc
@@ -1812,9 +1967,21 @@
             End Sub
         End Class
         Public Class initobj
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.initobj)
+            Inherits IL_MetadataToken
+            Public Sub New(typeTok As MetadataToken)
+                MyBase.New(OpCode.OpCodes.initobj, typeTok)
+            End Sub
+        End Class
+        Public Class initclass
+            Inherits IL_MetadataToken
+            Public Sub New([class] As MetadataToken)
+                MyBase.New(OpCode.OpCodes.initobj, [class])
+            End Sub
+        End Class
+        Public Class refanyval
+            Inherits IL_MetadataToken
+            Public Sub New([type] As MetadataToken)
+                MyBase.New(OpCode.OpCodes.refanyval, [type])
             End Sub
         End Class
         Public Class constraied
@@ -1848,9 +2015,15 @@
             End Sub
         End Class
         Public Class sizeof
-            Inherits IL_Instruction
-            Public Sub New()
-                MyBase.New(OpCode.OpCodes.sizeof)
+            Inherits IL_MetadataToken
+            Public Sub New(typeTok As MetadataToken)
+                MyBase.New(OpCode.OpCodes.sizeof, typeTok)
+            End Sub
+        End Class
+        Public Class stelem
+            Inherits IL_MetadataToken
+            Public Sub New(typeTok As MetadataToken)
+                MyBase.New(OpCode.OpCodes.sizeof, typeTok)
             End Sub
         End Class
         Public Class refanytype_
