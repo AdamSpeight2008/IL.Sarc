@@ -77,4 +77,27 @@
             Me._Bytes = {b0, b1, b2, b3}
         End Sub
     End Class
+
+    Public Class MetadataToken
+        Inherits ILCode
+
+        Public ReadOnly Property Value As UInt32
+
+        Public Sub New(Value As UInt32)
+            MyBase.New()
+            Me.Value = Value
+        End Sub
+
+        Public ReadOnly Property HeapID() As Byte
+            Get
+                Return CByte(Value >> 24)
+            End Get
+        End Property
+
+        Public ReadOnly Property HeapRow() As UInt32
+            Get
+                Return CUInt(Value And &H00FFFFFF)
+            End Get
+        End Property
+    End Class
 End Namespace

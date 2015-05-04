@@ -49,26 +49,23 @@ Public Class ByteSource
             Return output
         End Function
 
-        Public Function Read_Int16() As Int16
+        Public Function Read_2Bytes() As Int16
             Dim b0 = ReadByte()
             Dim b1 = ReadByte()
             Return (b0 << 8) + b1
         End Function
-        Public Function Read_UInt16() As UInt16
-            Dim b0 = ReadByte()
-            Dim b1 = ReadByte()
-            Return (b0 << 8) + b1
-        End Function
-        Public Function Read_Int32() As Int32
-            Dim b0 = Read_Int16()
-            Dim b1 = Read_Int16()
+
+        Public Function Read_4Bytes() As Int32
+            Dim b0 = Read_2Bytes()
+            Dim b1 = Read_2Bytes()
             Return (b0 << 16) + b1
         End Function
-        Public Function Read_UInt32() As UInt32
-            Dim b0 = Read_UInt16()
-            Dim b1 = Read_UInt16()
+        Public Function Read_8Bytes() As Int32
+            Dim b0 = Read_2Bytes()
+            Dim b1 = Read_2Bytes()
             Return (b0 << 16) + b1
         End Function
+
     End Class
 End Class
 
@@ -307,10 +304,10 @@ Public Class ByteCode_Decoder
     Private Function ReadCall(b As Byte, bytes As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
         Select Case b
             Case &H28
-                Dim addr = bytes.Read_Int32
+                Dim addr = bytes.Read_4Bytes
                 code.Add(Asm.call(addr))
             Case &H29
-                Dim addr = bytes.Read_Int32
+                Dim addr = bytes.Read_4Bytes
                 code.Add(Asm.calli(addr))
             Case &H6F
             Case Else
@@ -369,10 +366,10 @@ Public Class ByteCode_Decoder
 
 
     Private Function ReadSwitch(b As ByteSource.Reader, code As IL.ILCode) As IL.ILCode
-        Dim N = b.Read_UInt32
+        Dim N = CUInt(b.Read_4Bytes)
         Dim cases As New List(Of Int32)(N)
         For i As UInt32 = 1 To N
-            Dim c = b.Read_Int32
+            Dim c = b.Read_4Bytes
             cases.Add(i)
         Next
         code.Add(Asm.switch(N, cases))
